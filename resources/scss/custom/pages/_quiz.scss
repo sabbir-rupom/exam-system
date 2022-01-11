@@ -1,0 +1,117 @@
+.card-box {
+    .s-right {
+        position: absolute;
+        right: 24px;
+    }
+
+    .modal {
+        .modal-footer {
+            justify-content: center;
+        }
+
+        table {
+            vertical-align: middle;
+            .btn {
+                color: #556ee6;
+                font-weight: bold;
+            }
+        }
+    }
+
+    &.quiz-box {
+
+        margin-top: 2rem;
+
+        .box-title {
+            position: relative;
+            padding-bottom: 0.5rem;
+            border-bottom: 1px solid #eee;
+
+            h5 {
+                line-height: 36px;
+            }
+        }
+
+        .box-content,
+        .box-footer {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .quiz-top {
+            margin-top: 1rem;
+            font-size: 80%;
+        }
+
+        .btn-quiz {
+            display: none;
+        }
+
+        input[type="radio"]:checked,
+        input[type="checkbox"]:checked {
+            background-color: #556ee6;
+            border-color: #556ee6;
+        }
+
+    }
+}
+
+.question-block {
+    font-family: $title-font;
+    .question-detail {
+        display: flex;
+        align-items: flex-start;
+        font-size: 130%;
+        font-weight: bold;
+
+        .col-index {
+            width: 36px;
+            padding: 0px 8px;
+            text-align: center;
+        }
+
+        .col-content {
+            padding: 0;
+            width: 100%;
+
+            img, p {
+                max-width: 100%;
+            }
+        }
+
+    }
+
+    .option-detail {
+        margin: 0.7rem 0;
+        display: flex;
+        align-items: flex-start;
+        padding-left: 1%;
+        border-radius: 5px;
+        border: 1px solid #ddd;
+
+        .col-index {
+            width: 28px;
+            padding: 7px 0 5px 5px;
+            text-align: right;
+        }
+
+        .col-content {
+            padding: 6px 3px;
+        }
+
+        &.option-mapping {
+            border: 0;
+            border-radius: 0;
+
+            .col-left,
+            .col-right {
+                width: 100%;
+                max-width: 250px;
+            }
+
+            .col-mid {
+                padding: 5px;
+            }
+        }
+    }
+}
