@@ -16,7 +16,7 @@
     <div class="card-body">
         <h4 class="card-title mb-4 text-center">Create Form</h4>
 
-        <form action="{{ route('questions.create') }}" method="POST" enctype="multipart/form-data">
+        <form action="{{ route('questions.store') }}" method="POST" enctype="multipart/form-data">
             @csrf
             <div class="mb-3 row">
                 <label for="input--name" class="col-md-2 col-form-label text-end">
@@ -25,7 +25,7 @@
                 <div class="col-md-10">
                     @foreach ($questionTypes as $k => $v)
                     <div class="form-check form-radio-primary form-check-inline mt-2">
-                        <input class="form-check-input" type="radio" name="question_type" value="{{ $k }}" {{ $k == 1 ? 'checked="true"' : '' }} data-target="#block--optionPanel" data-label-text="{{ $v }}" data-label-target="#fieldLabel--questionType">
+                        <input class="form-check-input" type="radio" name="question_type" value="{{ $k }}" {{ $k <= 1 ? 'checked="true"' : '' }} data-target="#block--optionPanel" data-label-text="{{ $v }}" data-label-target="#fieldLabel--questionType">
                         <label class="form-check-label">{{ $v }}</label>
                     </div>
                     @endforeach
@@ -70,10 +70,10 @@
             </div>
             <div class="mb-3 row"">
                 <label for="input--question_name" class="col-md-2 col-form-label text-end">
-                    Question Title
+                    Question Title <sup class="text-danger">*</sup>
                 </label>
                 <div class="col-md-10">
-                    <input type="text" class="form-control" name="name" value="{{ old('name', '') }}" placeholder="Enter question title">
+                    <input type="text" required class="form-control" name="name" value="{{ old('name', '') }}" placeholder="Enter question title">
 
                     @error('name')
                     <div class="invalid-feedback d-block">
@@ -84,7 +84,7 @@
             </div>
             <div class="mb-3 row" id="toggle--question_detail">
                 <label for="input--question_detail" class="col-md-2 col-form-label text-end">
-                    Full Question
+                    Full Question <sup class="text-danger">*</sup>
                 </label>
                 <div class="col-md-10">
                     <textarea class="form-control rich-text" name="detail" id="input--question_detail"></textarea>
@@ -105,7 +105,7 @@
                     </legend>
 
                     <div id="block--optionPanel">
-                        @include('components.form.question-multiple-choice')
+                        @include('components.form.question-multiple-choice', ['type' => 1])
                     </div>
                 </fieldset>
             </div>

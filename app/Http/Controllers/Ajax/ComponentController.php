@@ -60,13 +60,13 @@ class ComponentController extends Controller
                 $qType = intval($request->value);
 
                 if(in_array($qType, [Question::TYPE_SINGLE, Question::TYPE_MULTIPLE])) {
-                    return view('components.form.question-multiple-choice')->with([])->render();
+                    return view('components.form.question-multiple-choice')->with(['type' => $qType])->render();
                 } elseif($qType === Question::TYPE_FILL_GAP) {
                     return view('components.form.question-fill-gap')->with([])->render();
                 } elseif($qType === Question::TYPE_TEXT_SHORT) {
-                    return view('components.form.question-short-text')->with([])->render();
+                    return view('components.form.question-text-answer')->with(['text' => 'short'])->render();
                 } elseif($qType === Question::TYPE_TEXT_BROAD) {
-                    return view('components.form.question-long-text')->with([])->render();
+                    return view('components.form.question-text-answer')->with(['text' => 'long'])->render();
                 } else {
                     return '';
                 }

@@ -4,14 +4,15 @@ $(function ()
     'use strict';
 
     var qVal = 0, questionType = $('input[name="question_type"]'),
-    url = '/ajax/component/get',
-    target = '';
+        url = '/ajax/component/get',
+        target = '';
 
     if (questionType.length > 0) {
         qVal = $('input[name="question_type"]:checked').val();
 
-        questionType.on('change', function() {
-            if($(this).val() !== qVal) {
+        questionType.on('change', function ()
+        {
+            if ($(this).val() !== qVal) {
                 qVal = $(this).val();
                 target = questionType.data('target');
 
@@ -41,7 +42,7 @@ $(function ()
 
                 let fieldLabel = $(this).data('label-target');
 
-                if(fieldLabel) {
+                if (fieldLabel) {
                     $(fieldLabel).html($(this).data('label-text'))
                 }
             }
@@ -89,6 +90,29 @@ $(function ()
         }
         if (targetLength - 1 <= min) {
             $('button.btn.btn-remove-more').fadeOut();
+        }
+    });
+
+    /**
+     * Handle cloned input-checkbox array index problem for multiple choice question
+     */
+    $(document).on('change', '.checkbox-array', function ()
+    {
+
+        if($(this).attr('type') === 'radio') {
+            if ($(this).is(':checked')) {
+                $('input.checkbox-array').prop('checked', false);
+                $('input.checkbox-array').siblings('input[type=hidden]').val('');
+
+                $(this).prop('checked', true);
+                $(this).siblings('input[type=hidden]').val(1);
+            }
+        } else {
+            if ($(this).is(':checked')) {
+                $(this).siblings('input[type=hidden]').val(1);
+            } else {
+                $(this).siblings('input[type=hidden]').val('');
+            }
         }
     });
 

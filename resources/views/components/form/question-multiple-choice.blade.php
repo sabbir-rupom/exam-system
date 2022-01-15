@@ -10,8 +10,13 @@
             </div>
             <div class="col-sm-2 text-center">
                 <div class="form-check form-check-right mt-2">
+                    @if ($type <= 1)
+                    <input class="form-check-input checkbox-array" data-input="answer" type="radio">
+                    <input type="hidden" class="depend-input-array" name="answer[]">
+                    @else
                     <input class="form-check-input checkbox-array" data-input="answer" type="checkbox">
                     <input type="hidden" class="depend-input-array" name="answer[]">
+                    @endif
                     <label class="form-check-label">
                         Is answer?
                     </label>

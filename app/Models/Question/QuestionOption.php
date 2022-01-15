@@ -58,15 +58,17 @@ class QuestionOption extends Model
      */
     public static function addNew(Request $request, int $questionId)
     {
-        foreach ($request->option as $k => $val) {
-            if (empty($val)) {
-                continue;
+        if (in_array($request->question_type, [Question::TYPE_SINGLE, Question::TYPE_MULTIPLE, Question::TYPE_FILL_GAP])) {
+            foreach ($request->option as $k => $val) {
+                if (empty($val)) {
+                    continue;
+                }
+                QuestionOption::create([
+                    'content' => $val,
+                    'answer' => ($request->question_type != Question::TYPE_FILL_GAP) ? (isset($request->answer[$k]) && !empty($request->answer[$k]) ? 1 : 0) : 1,
+                    'question_id' => $questionId,
+                ]);
             }
-            QuestionOption::create([
-                'content' => $val,
-                'answer' => isset($request->answer[$k]) && !empty($request->answer[$k]) ? 1 : 0,
-                'question_id' => $questionId,
-            ]);
         }
 
         return;
@@ -100,14 +102,19 @@ class QuestionOption extends Model
                 }
                 $option->update([
                     'content' => $val,
-                    'answer' => isset($request->answer[$k]) && $request->answer[$k] ? 1 : 0,
+                    'answer' => ($request->question_type != Question::TYPE_FILL_GAP)
+                        ? (isset($request->answer[$k]) && !empty($request->answer[$k]) ? 1 : 0) : 1,
                 ]);
             } else {
-                QuestionOption::create([
-                    'content' => $val,
-                    'answer' => isset($request->answer[$k]) && !empty($request->answer[$k]) ? 1 : 0,
-                    'question_id' => $questionId,
-                ]);
+
+                if (in_array($request->question_type, [Question::TYPE_SINGLE, Question::TYPE_MULTIPLE, Question::TYPE_FILL_GAP])) {
+                    QuestionOption::create([
+                        'content' => $val,
+                        'answer' => ($request->question_type != Question::TYPE_FILL_GAP)
+                            ? (isset($request->answer[$k]) && !empty($request->answer[$k]) ? 1 : 0) : 1,
+                        'question_id' => $questionId,
+                    ]);
+                }
             }
         }
 
