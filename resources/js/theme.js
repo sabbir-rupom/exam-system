@@ -1,12 +1,3 @@
-global.$ = global.jQuery = require('jquery');
-require('bootstrap');
-require('metismenu');
-require('simplebar');
-require('node-waves');
-import toastr from 'toastr';
-window.toastr = toastr
-const swal = global.swal = require('sweetalert2');
-
 (function ($) {
 
     'use strict';

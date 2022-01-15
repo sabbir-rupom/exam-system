@@ -20,6 +20,13 @@ const folder = {
 
 var third_party_assets = {
     css_js: [
+        { "name": "jquery", "assets": ["./node_modules/jquery/dist/jquery.min.js"] },
+        { "name": "bootstrap", "assets": ["./node_modules/bootstrap/dist/js/bootstrap.bundle.js"] },
+        { "name": "metismenu", "assets": ["./node_modules/metismenu/dist/metisMenu.js"] },
+        { "name": "simplebar", "assets": ["./node_modules/simplebar/dist/simplebar.js"] },
+        { "name": "node-waves", "assets": ["./node_modules/node-waves/dist/waves.js"] },
+        { "name": "toastr", "assets": ["./node_modules/toastr/build/toastr.min.js", "./node_modules/toastr/build/toastr.min.css"] },
+        { "name": "sweetalert2", "assets": ["./node_modules/sweetalert2/dist/sweetalert2.min.js", "./node_modules/sweetalert2/dist/sweetalert2.min.css"] },
         { "name": "select2", "assets": ["./node_modules/select2/dist/js/select2.min.js", "./node_modules/select2/dist/css/select2.min.css"] },
         {
             "name": "datatables", "assets": ["./node_modules/datatables.net/js/jquery.dataTables.min.js",
@@ -103,9 +110,9 @@ mix.webpackConfig({
 //copying demo pages related assets
 var app_pages_assets = {
     js: [
-        // folder.src + "js/pages/sweet-alerts.init.js",
-        // folder.src + "js/pages/toastr.init.js",
-        // folder.src + "js/pages/datatables.init.js",
+        folder.src + "js/pages/form-editor.init.js",
+        folder.src + "js/pages/quiz.init.js",
+        folder.src + "js/pages/question-builder.init.js",
     ]
 };
 

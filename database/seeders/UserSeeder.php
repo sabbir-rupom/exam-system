@@ -48,42 +48,6 @@ class UserSeeder extends Seeder
             'activated_at' => Carbon::now(),
         ]);
 
-        // create student
-        $student = \App\Models\User::firstOrCreate([
-            'name' => 'Student',
-            'email' => 'student@gmail.com',
-            'password' => Hash::make('test1123'),
-            'email_verified_at' => Carbon::now(),
-            'dob' => Carbon::now()
-        ]);
-
-        $student->attachRole('student');
-
-        \App\Models\OwnerUser::firstOrCreate([
-            'user_id' => $student->id,
-            'owner_id' => $owner->id,
-            'status' => true,
-            'type' => \App\Models\OwnerUser::USER_STUDENT
-        ]);
-
-        // create student
-        $teacher = \App\Models\User::firstOrCreate([
-            'name' => 'Teacher',
-            'email' => 'teacher@gmail.com',
-            'password' => Hash::make('test1123'),
-            'email_verified_at' => Carbon::now(),
-            'dob' => Carbon::now()
-        ]);
-
-        $teacher->attachRole('teacher');
-
-        \App\Models\OwnerUser::firstOrCreate([
-            'user_id' => $teacher->id,
-            'owner_id' => $owner->id,
-            'status' => true,
-            'type' => \App\Models\OwnerUser::USER_TEACHER
-        ]);
-
     }
 
     /**

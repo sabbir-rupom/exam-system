@@ -19,6 +19,27 @@
                         <div class="row no-gutters align-items-center">
                             <div class="col-md-3">
                                 <div class="icon-box">
+                                    <i class="bx bx-hive"></i>
+                                </div>
+                            </div>
+                            <div class="col-md-9">
+                                <div class="card-body ps-0">
+                                    <div class="card-title">
+                                        <a href="{{ route('questions.index') }}">Questions</a>
+                                    </div>
+                                    <div class="card-text">
+                                        <a href="{{ route('questions.create') }}">Add Question</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {{-- <div class="col-md-6">
+                    <div class="card dashboard-card">
+                        <div class="row no-gutters align-items-center">
+                            <div class="col-md-3">
+                                <div class="icon-box">
                                     <i class="bx bx-user"></i>
                                 </div>
                             </div>
@@ -55,7 +76,7 @@
                             </div>
                         </div>
                     </div>
-                </div>
+                </div> --}}
             </div>
         </div>
     </div>

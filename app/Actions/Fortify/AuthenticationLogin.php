@@ -14,14 +14,6 @@ class AuthenticationLogin
 
     public static function process(Request $request)
     {
-        $domain = get_subdomain($request->getHost());
-
-        if(!isset($request->domain) || $domain !== $request->domain) {
-            throw ValidationException::withMessages([
-                'error' => "Domain request not recognized",
-            ]);
-        }
-
         $credentials = $request->only('email', 'password');
 
         if (Auth::attempt($credentials)) {
@@ -29,26 +21,16 @@ class AuthenticationLogin
             $user = auth()->user();
 
             $owner = Owner::where([
-                'domain' => $domain
+                'user_id' => $user->id
             ])->first();
-
-            if(empty($owner)) {
-                throw ValidationException::withMessages([
-                    'error' => "Invalid user domain",
-                ]);
-            } elseif($owner->status <= 0) {
-                throw ValidationException::withMessages([
-                    'error' => "User domain is blocked",
-                ]);
-            }
 
             $isAdmin = $isOwner = $isStudent = $isTeacher = false;
 
             $sessionData = [
-                'is_admin' => $isAdmin,
-                'is_owner' => $isOwner,
-                'is_student' => $isStudent,
-                'is_teacher' => $isTeacher,
+                'is_admin' => false,
+                'is_owner' => false,
+                'is_student' => false,
+                'is_teacher' => false,
                 'owner' => [],
                 'config' => [],
                 'profile' => []
@@ -80,10 +62,6 @@ class AuthenticationLogin
             }
 
             session($sessionData);
-
-            $user->domain_now = $domain;
-            $user->save();
-
             return $user;
 
         }

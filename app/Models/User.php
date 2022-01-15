@@ -54,28 +54,19 @@ class User extends Authenticatable
     /**
      * User Role is defined according to database table
      */
-    const ROLE_STUDENT = 3;
+    const ROLE_OWNER = 1;
     const ROLE_TEACHER = 2;
-    const ROLE_ADMIN = 1;
+    const ROLE_STUDENT = 3;
 
     /**
      * Types of users
      * --- Admin types are excluded
      */
-    const USER_TYPES = [
+    const ROLE_TYPES = [
         self::ROLE_STUDENT => 'student',
         self::ROLE_TEACHER => 'teacher',
-        self::ROLE_ADMIN => 'admin',
+        self::ROLE_OWNER => 'owner',
     ];
-
-    public static function getType(string $userType)
-    {
-        if ($userType === 'teacher') {
-            return self::ROLE_TEACHER;
-        } else {
-            return self::ROLE_STUDENT;
-        }
-    }
 
     /**
      * Get user list by user role

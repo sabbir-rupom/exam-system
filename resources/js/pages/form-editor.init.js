@@ -8,9 +8,9 @@ $(function ()
             selector: "textarea.full-rich-text",
             height: 300,
             plugins: [
-                "advlist autolink link image lists charmap print preview hr anchor pagebreak spellchecker",
+                "advlist autolink link image lists charmap print preview hr anchor pagebreak",
                 "searchreplace wordcount visualblocks visualchars code fullscreen insertdatetime media nonbreaking",
-                "save table contextmenu directionality emoticons template paste textcolor"
+                "save table contextmenu directionality emoticons template paste"
             ],
             toolbar: "insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | l      ink image | print preview media fullpage | forecolor backcolor emoticons",
             style_formats: [
@@ -37,9 +37,9 @@ $(function ()
             height: 300,
             menubar: '',
             plugins: [
-                "advlist autolink link image lists charmap print preview hr anchor spellchecker ",
+                "advlist autolink link image lists charmap print preview hr anchor ",
                 "code wordcount fullscreen media ",
-                "table paste textcolor"
+                "table paste"
             ],
             toolbar: "insertfile undo redo | styleselect | bold italic | forecolor backcolor emoticons | alignleft aligncenter alignright alignjustify | bullist numlist | link image | preview media fullpage | code",
             paste_data_images: true,
@@ -73,8 +73,8 @@ $(function ()
             height: 300,
             menubar: '',
             plugins: [
-                "autolink link preview hr anchor spellchecker wordcount lists",
-                "paste textcolor"
+                "autolink link preview hr anchor wordcount lists",
+                "paste"
             ],
             toolbar: "undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | outdent indent | link | fullpage | forecolor backcolor emoticons",
         });

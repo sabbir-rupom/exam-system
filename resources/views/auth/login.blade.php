@@ -14,7 +14,7 @@
                         <div class="auth-full-page-content p-md-5 p-4">
                             <div class="w-100">
                                 <div class="d-flex flex-column h-100">
-                                    <div class="">
+                                    <div class="mb-5">
                                         <a href="{{ url('/') }}" class="d-block auth-logo text-center">
                                             <img src="{{ URL::asset('/assets/images/logo.png') }}" alt=""
                                                 class="img-fluid w-25">
@@ -63,7 +63,6 @@
                                             </div>
 
                                             <div class="mt-3 d-grid">
-                                                <input type="hidden" name="domain" value="{{ $domain }}">
                                                 <button class="btn btn-primary waves-effect waves-light" type="submit">Log
                                                     In</button>
                                             </div>
@@ -87,11 +86,4 @@
             </div>
         </div>
 
-    @endsection
-
-    @section('script')
-        <script src="{{ URL::asset('assets/libs/jquery-validation/jquery-validation.min.js') }}"></script>
-        <!-- validation init -->
-        <script src="{{ URL::asset('/assets/js/pages/validation.init.js') }}"></script>
-        <script src="{{ URL::asset('/assets/js/pages/auth.init.js') }}"></script>
     @endsection

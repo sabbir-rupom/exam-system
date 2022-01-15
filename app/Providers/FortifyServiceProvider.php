@@ -41,16 +41,9 @@ class FortifyServiceProvider extends ServiceProvider
         RateLimiter::for('login', function (Request $request) {
             return Limit::perMinute(5)->by($request->email . $request->ip());
         });
+
         Fortify::loginView(function (Request $request) {
-            $domain = get_subdomain($request->getHost());
-            if($domain === 'app') {
-                return view('login', [
-                    'url' => get_protocol() . '{domain}.' . config('app.short_url') . '/login'
-                ]);
-            }
-            return view('auth.login', [
-                'domain' => $domain
-            ]);
+            return view('auth.login');
         });
 
         Fortify::authenticateUsing(function (Request $request) {

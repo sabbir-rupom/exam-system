@@ -1,8 +1,9 @@
 <?php
 
 use App\Http\Controllers\Admin\DashboardController as AdminDashboard;
+use App\Http\Controllers\Ajax\ComponentController as AjaxComponent;
+use App\Http\Controllers\Entity\QuestionController as EntityQuestion;
 use App\Http\Controllers\Owner\DashboardController as OwnerDashboard;
-use App\Http\Controllers\Owner\UserController as OwnerUser;
 use App\Http\Controllers\HomeController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -13,39 +14,40 @@ use Illuminate\Support\Facades\Route;
 |--------------------------------------------------------------------------
  */
 
-Route::get('/', [HomeController::class, 'index']);
 Route::permanentRedirect('/index', '/');
 Route::permanentRedirect('/home', '/');
 
-Route::middleware(['auth', 'admin'])->group(function () {
+Route::get('/', [HomeController::class, 'index']);
+
+Route::group(['middleware' => 'guest'], function () {
+
+});
+
+Route::middleware(['auth'])->group(function () {
+
+    Route::group(['middleware' => 'role.user:admin', 'prefix' => 'admin'], function () {
+        /**
+         * Include admin related route definitions
+         */
+        Route::get('/dashboard', [AdminDashboard::class, 'index'])->name('admin.dashboard');
+
+    });
+
+
+    Route::group(['middleware' => 'role.user:owner'], function () {
+        /**
+         * Include admin related route definitions
+         */
+        Route::get('/dashboard', [OwnerDashboard::class, 'index'])->name('owner.dashboard');
+
+        // Question management routes
+        Route::resource('questions', EntityQuestion::class);
+    });
+
     /**
-     * Include admin related route definitions
+     * Ajax route management
      */
-});
-
-Route::middleware(['auth', 'owner'])->group(function () {
-    Route::get('/', [OwnerDashboard::class, 'index'])->name('owner.dashboard');
-
-    // User Routes
-    Route::permanentRedirect('/user', '/user/list');
-    Route::get('/user/list', [OwnerUser::class, 'index'])->name('owner.users');
-    Route::get('/user/add', [OwnerUser::class, 'create'])->name('owner.user.add');
-    Route::post('/user/add', [OwnerUser::class, 'store']);
-    Route::get('/user/{user}', [OwnerUser::class, 'edit'])->name('owner.user.edit');
-    Route::put('/user/{user}', [OwnerUser::class, 'update']);
-    Route::delete('/user/{user}', [OwnerUser::class, 'delete'])->name('owner.user.delete');
-
-    // Course Routes
-    // Route::permanentRedirect('/course', '/course/list');
-    // Route::get('/course/list', [CourseController::class, 'index'])->name('owner.course');
-    // Route::get('/admin/course/add', [CourseController::class, 'create'])->name('owner.course.add');
-
-});
-Route::middleware(['auth', 'teacher'])->group(function () {
-    // Route::get('/', [HomeController::class, 'userhome']);
-
-});
-Route::middleware(['auth', 'student'])->group(function () {
-    // Route::get('/', [HomeController::class, 'userhome']);
+    Route::match(['get', 'post'], '/ajax/component/get', [AjaxComponent::class, 'index']);
+    // Route::post('/ajax/quiz/exam/update', [AjaxQuiz::class, 'updateQuizExam']);
 
 });
