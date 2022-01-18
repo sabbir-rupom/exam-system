@@ -2,7 +2,9 @@
 
 use App\Http\Controllers\Admin\DashboardController as AdminDashboard;
 use App\Http\Controllers\Ajax\ComponentController as AjaxComponent;
+use App\Http\Controllers\Ajax\EntityController as AjaxEntity;
 use App\Http\Controllers\Entity\QuestionController as EntityQuestion;
+use App\Http\Controllers\Entity\GroupController as EntityGroup;
 use App\Http\Controllers\Owner\DashboardController as OwnerDashboard;
 use App\Http\Controllers\HomeController;
 use Illuminate\Http\Request;
@@ -42,12 +44,16 @@ Route::middleware(['auth'])->group(function () {
 
         // Question management routes
         Route::resource('questions', EntityQuestion::class);
+
+        // Group management routes
+        Route::resource('groups', EntityGroup::class);
     });
 
     /**
      * Ajax route management
      */
-    Route::match(['get', 'post'], '/ajax/component/get', [AjaxComponent::class, 'index']);
+    Route::any('/ajax/component/get', [AjaxComponent::class, 'index'])->name('ajax.component.get');
+    Route::delete('/ajax/entity/delete', [AjaxEntity::class, 'destroy'])->name('ajax.entity.delete');
     // Route::post('/ajax/quiz/exam/update', [AjaxQuiz::class, 'updateQuizExam']);
 
 });

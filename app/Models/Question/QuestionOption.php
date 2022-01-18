@@ -83,7 +83,9 @@ class QuestionOption extends Model
      */
     public static function updateAll(Request $request, int $questionId)
     {
-        // $options = self::where('question_id', $questionId)->get();
+        if(empty($request->option)) {
+            return;
+        }
 
         foreach ($request->option as $k => $val) {
             if (empty($val)) {
@@ -135,5 +137,37 @@ class QuestionOption extends Model
                 'question_options.question_id' => $questionId,
                 'question_options.answer' => 1,
             ])->groupBy('question_options.question_id')->orderBy('question_options.id', 'ASC')->first();
+    }
+
+    /**
+     * Delete a valid question option
+     *
+     * @param Request $request
+     * @return void
+     */
+    public static function remove(Request $request)
+    {
+        $questionId = $request->question_id ? intval($request->question_id) : ($request->id ? intval($request->id) : 0);
+        $optionId = $request->option ? intval($request->option) : ($request->option_id ? intval($request->option_id) : 0);
+
+        $question = Question::where([
+            'id' => $questionId
+        ])->first();
+
+        if($question->owner_id == session('owner')['id'] && $optionId > 0) {
+            QuestionOption::where([
+                'id' => $optionId,
+                'question_id' => $questionId
+            ])->delete();
+
+            return [
+                'success' => true
+            ];
+        }
+
+        return [
+            'success' => false,
+            'message' => 'Invalid question option'
+        ];
     }
 }

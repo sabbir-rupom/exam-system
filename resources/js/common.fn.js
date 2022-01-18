@@ -97,7 +97,9 @@ function closeFullscreen()
  */
 async function fetchCall(url, data = [], method = 'POST', headers, callback = '')
 {
-    var fetchResult = null, ajaxUrl = $('#base_url').val() + url,
+    let ajaxUrl = (url.indexOf("http://") == 0 || url.indexOf("https://") == 0) ? url : $('#base_url').val() + url;
+
+    var fetchResult = null,
         requestHeaders = {
             'Content-Type': 'application/json',
             'Accept': 'application/json',

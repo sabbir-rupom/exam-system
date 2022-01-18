@@ -1,8 +1,7 @@
 <?php
 
 use App\Library\Resource\FileStorage;
-use App\Models\Question;
-use App\Models\Quiz;
+use App\Models\Question\Question;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Http\Exceptions\HttpResponseException;
@@ -46,7 +45,7 @@ if (!function_exists('get_remote_host')) {
 
     function get_remote_host()
     {
-        return isset($_SERVER['HTTP_ORIGIN']) && !empty($_SERVER['HTTP_ORIGIN']) ? $_SERVER['HTTP_ORIGIN'] : $_SERVER['HTTP_REFERER'];
+        return isset($_SERVER['HTTP_ORIGIN']) && !empty($_SERVER['HTTP_ORIGIN']) ? $_SERVER['HTTP_ORIGIN'] : (isset($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : '');
     }
 }
 
@@ -281,6 +280,54 @@ if (!function_exists('same_array')) {
         // $b = array_values($b);
         return count($a) == count($b) && !array_diff($a, $b);
 
+    }
+}
+
+if (!function_exists('few_words')) {
+    /**
+     * Get 1st n characters of words
+     *
+     * @param string $message
+     * @param integer $K
+     * @return void
+     */
+    function few_words(string $message, int $K = 20) {
+
+        if ($K < 1) {
+            return '';
+        }
+
+        if (strlen($message) <= $K) {
+            return trim($message);
+        }
+
+        if($message[$K] === " ") {
+            return trim(substr($message,0,$K));
+        }
+
+        while($message[--$K] !== ' ');
+
+        return trim(substr($message,0,$K));
+    }
+}
+
+if (!function_exists('slug_create')) {
+    /**
+     * Get code / slug from string
+     *
+     * @param string $string
+     * @param integer $K
+     * @return void
+     */
+    function slug_create(string $string) {
+
+        if (strlen($string) > 50) {
+            $string = few_words($string, 50);
+        }
+
+        $string = preg_replace('/\s+/', ' ', strtolower($string));
+
+        return trim(str_replace(' ', '-', $string));
     }
 }
 

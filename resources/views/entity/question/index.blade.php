@@ -9,10 +9,9 @@
         @slot('pageTitle') Questions @endslot
     @endcomponent
 
-    @include('layouts.default-message')
-
     <div class="container">
         <div class="row">
+            @include('layouts.default-message')
             <div class="table-responsive my-3">
                 <a class="btn btn-success mb-3" href="{{ route('questions.create') }}">Add Question</a>
                 <table class="table">
@@ -21,7 +20,6 @@
                             <th>#</th>
                             <th>Question</th>
                             <th>Group</th>
-                            <th>Course</th>
                             <th>Question Type</th>
                             <th class="text-center" style="min-width: 120px">Action</th>
                         </tr>
@@ -32,7 +30,6 @@
                                 <td>{{ $loop->iteration }}</td>
                                 <td>{{ $ques->name }}</td>
                                 <td>{{ empty($ques->group_name) ? '-' : $ques->group_name }}</td>
-                                <td>{{ $ques->course_title }}</td>
                                 <td>{{ $questionTypes[$ques->question_type] }}</td>
                                 <td class="text-center">
                                     {{-- <button type="button" class="btn btn-sm btn-secondary action-view"
@@ -44,7 +41,7 @@
                                         <i class="fas fa-edit"></i>
                                     </a>
                                     <form method="post" class="d-inline"
-                                        action="{{ route('questions.delete', $ques) }}">
+                                        action="{{ route('questions.destroy', $ques) }}">
                                         @method('delete')
                                         @csrf
                                         <button class="btn btn-sm btn-danger" type="submit"

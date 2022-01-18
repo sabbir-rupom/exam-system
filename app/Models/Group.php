@@ -18,5 +18,6 @@ class Group extends Model
         'owner_id',
         'name',
         'slug',
+        'global',
     ];
 }

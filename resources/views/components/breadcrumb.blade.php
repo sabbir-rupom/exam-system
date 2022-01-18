@@ -8,7 +8,7 @@ $title = isset($pageTitle) && $pageTitle ? $pageTitle : $breadTitle;
             @isset($breadSingle)
                 <li class="breadcrumb-item text-muted mt-1">{{ $breadSingle }}</li>
             @else
-                <li class="breadcrumb-item"><a href="{!! isset($breadLink) ? trim($breadLink) : 'javascript: void(0);' !!}">{{ $breadTitle }}</a></li>
+                <li class="breadcrumb-item"><a href="{!! isset($breadLink) ? trim($breadLink) : url('/') !!}">{{ $breadTitle }}</a></li>
                 @isset($breadSubTitle)
                     <li class="breadcrumb-item"><a href="{!! isset($breadSubLink) ? trim($breadSubLink) : 'javascript: void(0);' !!}">{{ $breadSubTitle }}</a></li>
                 @endisset

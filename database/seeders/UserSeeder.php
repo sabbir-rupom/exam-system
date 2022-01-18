@@ -19,6 +19,9 @@ class UserSeeder extends Seeder
     {
         $this->truncateUserTables();
 
+        /**
+         * Create admin user
+         */
         $user = \App\Models\User::firstOrCreate([
             'name' => 'admin_user',
             'email' => 'admin@gmail.com',
@@ -30,10 +33,19 @@ class UserSeeder extends Seeder
         $user->attachRole('admin');
         $user->attachPermissions(['all-create', 'all-read', 'all-update', 'all-delete']);
 
-        // create owner
+        $owner = \App\Models\Owner::firstOrCreate([
+            'user_id' => $user->id,
+            'status' => true,
+            'domain' => 'admin',
+            'activated_at' => Carbon::now(),
+        ]);
+
+        /**
+         * Create test user with ownership
+         */
         $userOwner = \App\Models\User::firstOrCreate([
-            'name' => 'Sabbir',
-            'email' => 'sabbir@gmail.com',
+            'name' => 'Test',
+            'email' => 'test@gmail.com',
             'password' => Hash::make('test1123'),
             'email_verified_at' => Carbon::now(),
             'dob' => Carbon::now()

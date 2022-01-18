@@ -1,7 +1,11 @@
+@php
+    $index = isset($counter) ? $counter : 1;
+@endphp
+
 <div class="panel-body pt-2">
-    <div class="row option-row mb-3" data-index="1">
-        <label class="col-sm-2 col-form-label text-center">
-            Answer #<span class="counter">1</span>
+    <div class="row option-row mb-3" data-index="{{ $index }}">
+        <label class="col-sm-2 col-form-label text-end">
+            Answer #<span class="counter">{{ $index }}</span>
         </label>
         <div class="col-sm-8">
             <input type="text" class="form-control" required placeholder="enter answer" name="option[]">

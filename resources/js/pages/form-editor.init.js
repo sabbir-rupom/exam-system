@@ -36,12 +36,13 @@ $(function ()
             selector: "textarea.rich-text",
             height: 300,
             menubar: '',
+            branding: false,
             plugins: [
-                "advlist autolink link image lists charmap print preview hr anchor ",
-                "code wordcount fullscreen media ",
+                "advlist autolink link image lists preview hr anchor ",
+                "code wordcount fullscreen ",
                 "table paste"
             ],
-            toolbar: "insertfile undo redo | styleselect | bold italic | forecolor backcolor emoticons | alignleft aligncenter alignright alignjustify | bullist numlist | link image | preview media fullpage | code",
+            toolbar: "undo redo | styleselect | bold italic forecolor | alignleft aligncenter alignright alignjustify | bullist numlist | link image | preview code",
             image_title: true,
             paste_data_images: true,
             paste_image_maxsize: 5,
