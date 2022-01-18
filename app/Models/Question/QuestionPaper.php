@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Models\Quiz;
+namespace App\Models\Question;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Quiz extends Model
+class QuestionPaper extends Model
 {
     use HasFactory;
 
@@ -15,14 +15,8 @@ class Quiz extends Model
      * @var array
      */
     protected $fillable = [
-        'owner_id',
-        'name',
-        'question_amount',
-        'duration',
-        'pass_mark',
-        'status',
-        'type',
-        'difficulty_order',
-        'question_paper_id',
+        'category',
+        'data',
+        'slug',
     ];
 }
