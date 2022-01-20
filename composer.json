@@ -1,9 +1,8 @@
 {
     "name": "laravel/laravel",
     "type": "project",
-    "description": "The Laravel Framework.",
-    "keywords": ["framework", "laravel"],
-    "license": "MIT",
+    "description": "Custom Examination Management System with Laravel",
+    "keywords": ["framework", "laravel", "academy", "educational", "exam-management"],
     "require": {
         "php": "^7.3|^8.0",
         "doctrine/dbal": "^3.1",

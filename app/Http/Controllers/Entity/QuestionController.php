@@ -65,24 +65,7 @@ class QuestionController extends Controller
     {
         $this->_requestValidate($request);
 
-        $question = Question::create([
-            'owner_id' => session('owner')['id'],
-            'name' => $request->name,
-            'detail' => !empty($request->detail) ? $request->detail : $request->name,
-            'difficulty' => $request->difficulty,
-            'explanation' => !empty($request->explanation) ? $request->explanation : null,
-            'question_type' => $request->question_type,
-            'status' => 1,
-        ]);
-
-        if($request->group && $request->group > 0) {
-            QuestionGroup::create([
-                'group_id' => intval($request->group),
-                'question_id' => $question->id
-            ]);
-        }
-
-        QuestionOption::addNew($request, $question->id);
+        Question::add($request);
 
         return back()->with('success', __('alert.question_added_successfully'));
     }
@@ -118,6 +101,7 @@ class QuestionController extends Controller
             'ques' => $question,
             'questionTypes' => $questionTypes,
             'options' => $options,
+            'groups' => $groups
         ]);
     }
 

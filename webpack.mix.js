@@ -113,6 +113,7 @@ var app_pages_assets = {
         folder.src + "js/pages/form-editor.init.js",
         folder.src + "js/pages/quiz.init.js",
         folder.src + "js/pages/question-builder.init.js",
+        folder.src + "js/pages/question-paper.init.js",
     ]
 };
 

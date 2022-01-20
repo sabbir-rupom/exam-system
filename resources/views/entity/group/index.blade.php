@@ -13,7 +13,7 @@
         <div class="row">
             @include('layouts.default-message')
             <div class="table-responsive my-3">
-                <a class="btn btn-success mb-3" href="{{ route('groups.create') }}">Add Group</a>
+                <a class="btn btn-success mb-3" href="{{ route('groups.create') }}">Add New</a>
                 <table class="table">
                     <thead class="table-light">
                         <tr style="vertical-align: middle">
@@ -37,9 +37,12 @@
                                         action="{{ route('groups.destroy', $group) }}">
                                         @method('delete')
                                         @csrf
-                                        <button class="btn btn-sm btn-danger" type="submit"
-                                            onclick="if(!confirm('Are you sure to delete this group?')) return false;"><i
-                                                class="fas fa-minus"></i></button>
+                                        <button class="btn btn-sm btn-danger delete-confirm action-form" type="button"
+                                        data-title="Are you sure?"
+                                        data-text="This group will be deleted. Do you wish to proceed?"
+                                        data-confirm_text="Yes, Delete">
+                                            <i class="fas fa-minus"></i>
+                                        </button>
                                     </form>
                                 </td>
                             </tr>

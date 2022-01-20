@@ -2,6 +2,7 @@
 
 use App\Library\Resource\FileStorage;
 use App\Models\Question\Question;
+use Illuminate\Database\Eloquent\Model;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Http\Exceptions\HttpResponseException;
@@ -561,20 +562,20 @@ if (!function_exists('truncate_words')) {
     }
 }
 
-if (!function_exists('quiz_exam_link')) {
+if (!function_exists('get_exam_link')) {
     /**
      * Generate quiz exam link
      *
      * @return string
      */
-    function quiz_exam_link(Quiz $quiz): string
+    function get_exam_link(Model $exam): string
     {
 
-        if (empty($quiz->id)) {
+        if (empty($exam->id)) {
             return '';
         }
 
-        return url('exam/quiz?code=' . encode_short($quiz->id) . '$' . encode_short($quiz->user_id));
+        return url('exam/start?code=' . encode_short($exam->id) . '$' . encode_short($exam->owner_id));
 
     }
 }

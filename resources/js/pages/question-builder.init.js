@@ -3,18 +3,18 @@ $(function ()
 
     'use strict';
 
-    var qVal = 0, questionType = $('input[name="question_type"]'),
+    var qVal = 0, questionType = $('select[name="question_type"]'),
         url = '/ajax/component/get',
         target = '';
 
     if (questionType.length > 0) {
-        qVal = $('input[name="question_type"]:checked').val();
+        qVal = questionType.val();
 
         questionType.on('change', function ()
         {
             if ($(this).val() !== qVal) {
                 qVal = $(this).val();
-                target = questionType.data('target');
+                target = questionType.find(":selected").data('target');
 
                 const response = fetchCall(url, {
                     name: 'question',
@@ -40,10 +40,10 @@ $(function ()
                     });
                 }
 
-                let fieldLabel = $(this).data('label-target');
+                let fieldLabel = $(this).find(":selected").data('label-target');
 
                 if (fieldLabel) {
-                    $(fieldLabel).html($(this).data('label-text'))
+                    $(fieldLabel).html($(this).find(":selected").data('label-text'))
                 }
             }
         });
@@ -99,7 +99,7 @@ $(function ()
     $(document).on('change', '.checkbox-array', function ()
     {
 
-        if($(this).attr('type') === 'radio') {
+        if ($(this).attr('type') === 'radio') {
             if ($(this).is(':checked')) {
                 $('input.checkbox-array').prop('checked', false);
                 $('input.checkbox-array').siblings('input[type=hidden]').val('');
@@ -116,6 +116,9 @@ $(function ()
         }
     });
 
+    /**
+     * Initialize rich text-editor for question textarea
+     */
     const templateInput = 'textarea.q-rich-text';
     if ($(templateInput).length > 0) {
         tinymce.init({
@@ -198,4 +201,42 @@ $(function ()
         });
     }
 
+    var btnQuestionAdd = $('#button--addQuestion');
+    if (btnQuestionAdd.length > 0) {
+        /**
+         * Save new question to server and add to select options dynamically
+         */
+        btnQuestionAdd.on('click', function ()
+        {
+            let questionForm = btnQuestionAdd.closest("form")[0];
+            let postData = {},
+                formData = new FormData(questionForm),
+                url = $(questionForm).attr('action');
+
+            postData = formDataToArray(formData);
+
+            postData['entity'] = postData['type'] = 'question';
+
+            const response = fetchCall(url, postData, 'POST');
+
+            if (response instanceof Error) {
+                toastr.error('Ajax error', 'Error!')
+            } else {
+                response.then(json =>
+                {
+                    if (json.success) {
+                        var newOption = new Option(json.data.name, json.data.id, true, true);
+                        $('#select--questions').append(newOption).trigger('change');
+
+                        $('.modal').modal('hide');
+
+                        $(questionForm).trigger("reset");
+                    } else {
+                        toastr.error(json.message, 'Error!')
+                    }
+
+                });
+            }
+        });
+    }
 });

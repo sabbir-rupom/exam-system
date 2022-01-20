@@ -23,7 +23,6 @@ class CreateQuizzesTable extends Migration
             $table->boolean('status')->default(0);
             $table->json('difficulty_order')->nullable();
             $table->tinyInteger('type')->default(1)->comment('1: Random, 2: Question Paper');
-            $table->bigInteger('question_paper_id')->unsigned()->nullable();
             $table->softDeletes();
             $table->timestamps();
         });

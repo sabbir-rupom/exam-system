@@ -7,6 +7,7 @@
     @component('components.breadcrumb')
         @slot('breadTitle') Home @endslot
         @slot('breadSubTitle') Groups @endslot
+        @slot('breadSubLink') {{ route('groups.index') }} @endslot
         @slot('pageTitle') Edit Group @endslot
     @endcomponent
 

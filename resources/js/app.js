@@ -26,31 +26,51 @@ $(function ()
         }).then((result) =>
         {
             if (result.value) {
-                let url = $(this).data('url'),
-                    param = $(this).data('param');
+                if ($(this).hasClass('action-ajax')) {
+                    // Handle ajax request upon confirm
+                    let url = $(this).data('url'),
+                        param = $(this).data('param');
 
 
-                const response = fetchCall(url, param, 'POST');
+                    const response = fetchCall(url, param, 'POST');
 
-                if (response instanceof Error) {
-                    toastr.error('Ajax request failed', 'Sorry!');
-                } else {
-                    response.then(json =>
-                    {
-                        if (json.success) {
-                            toastr.success(json.message, 'Success!');
+                    if (response instanceof Error) {
+                        toastr.error('Ajax request failed', 'Sorry!');
+                    } else {
+                        response.then(json =>
+                        {
+                            if (json.success) {
+                                toastr.success(json.message, 'Success!');
 
-                            $this.closest(parent).remove();
-                        } else {
-                            toastr.error(json.message, 'Error!');
-                        }
-                        return;
+                                $this.closest(parent).remove();
+                            } else {
+                                toastr.error(json.message, 'Error!');
+                            }
+                            return;
 
-                    });
+                        });
+                    }
+                } else if ($(this).hasClass('action-form')) {
+                    // Handle form submission upon confirm
+                    var targetForm = $(this).data('target-form');
+                    if (targetForm && $(targetForm).length > 0) {
+                        $(targetForm).trigger('submit');
+                    } else {
+                        $(this).closest('form').trigger('submit');
+                    }
                 }
 
             }
         });
     });
+
+    /**
+     * Initialize select2 feature in select input fields
+     */
+    if ($("select.select2").length > 0) {
+        $(".select2").select2({
+            placeholder: "Please Select"
+        });
+    }
 
 });

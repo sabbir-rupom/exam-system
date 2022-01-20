@@ -1,14 +1,14 @@
 {
     "private": true,
-    "name": "skote",
-    "version": "3.3.1",
-    "description": "",
-    "author": "Themesbrand",
-    "browserslist": [
-        "last 2 version",
-        "> 2%"
-    ],
+    "name": "rpm-exam-system",
+    "version": "1.0.0",
+    "description": "Simple educational examination management system",
+    "main": "webpack.mix.js",
+    "directories": {
+        "test": "tests"
+    },
     "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1",
         "dev": "npm run development",
         "development": "mix",
         "watch": "mix watch",
@@ -17,6 +17,23 @@
         "prod": "npm run production",
         "production": "mix --production"
     },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/sabbir-rupom/exam-system.git"
+    },
+    "keywords": [
+        "education",
+        "examination",
+        "exam-management",
+        "questions",
+        "quiz"
+    ],
+    "author": "Sabbir Rupom",
+    "license": "ISC",
+    "bugs": {
+        "url": "https://github.com/sabbir-rupom/exam-system/issues"
+    },
+    "homepage": "https://github.com/sabbir-rupom/exam-system#readme",
     "devDependencies": {
         "axios": "^0.21",
         "laravel-mix": "^6.0.39",

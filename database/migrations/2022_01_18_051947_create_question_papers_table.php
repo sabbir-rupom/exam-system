@@ -16,9 +16,12 @@ class CreateQuestionPapersTable extends Migration
         Schema::create('question_papers', function (Blueprint $table) {
             $table->id();
             $table->string('category', 50);
+            $table->bigInteger('exam_id')->unsigned();
             $table->json('data');
             $table->string('slug')->nullable();
             $table->timestamps();
+
+            $table->unique(['category', 'exam_id']);
         });
     }
 

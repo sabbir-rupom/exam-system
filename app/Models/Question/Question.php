@@ -81,5 +81,41 @@ class Question extends Model
             ->leftJoin('groups', 'groups.id', '=', 'question_groups.group_id')
             ->where($filters)->paginate(10);
     }
+
+    /**
+     * Add new question
+     *
+     * @param Request $request
+     * @return array
+     */
+    public static function add(Request $request) {
+        $question = Question::create([
+            'owner_id' => session('owner')['id'],
+            'name' => $request->name,
+            'detail' => !empty($request->detail) ? $request->detail : $request->name,
+            'difficulty' => isset($request->difficulty) ? $request->difficulty : 1,
+            'explanation' => !empty($request->explanation) ? $request->explanation : null,
+            'question_type' => $request->question_type,
+            'status' => 1,
+        ]);
+
+        if($request->group && $request->group > 0) {
+            QuestionGroup::create([
+                'group_id' => intval($request->group),
+                'question_id' => $question->id
+            ]);
+        }
+
+        QuestionOption::addNew($request, $question->id);
+
+        return [
+            'success' => true,
+            'message' => 'Question added successfully',
+            'data' => [
+                'id' => $question->id,
+                'name' => $question->name
+            ]
+        ];
+    }
 }
 

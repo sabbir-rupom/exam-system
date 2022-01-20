@@ -80,7 +80,7 @@ class GroupController extends Controller
      */
     public function show(Group $group)
     {
-        return view('entity.group.edit', compact('group'));
+        return $this->edit($group);
     }
 
     /**
@@ -91,9 +91,10 @@ class GroupController extends Controller
      */
     public function edit(Group $group)
     {
-        if (empty($group) || $group->owner_id != session('owner_id')) {
+        if (empty($group) || $group->owner_id != session('owner')['id']) {
             return back()->with('status', 'Group not found');
         }
+        return view('entity.group.edit', compact('group'));
     }
 
     /**
@@ -105,7 +106,7 @@ class GroupController extends Controller
      */
     public function update(Request $request, Group $group)
     {
-        if (empty($group) || $group->owner_id != session('owner_id')) {
+        if (empty($group) || $group->owner_id != session('owner')['id']) {
             return back()->with('status', 'Group not found');
         }
 
@@ -138,7 +139,7 @@ class GroupController extends Controller
      */
     public function destroy(Group $group)
     {
-        if (empty($group) || $group->owner_id != session('owner_id')) {
+        if (empty($group) || $group->owner_id != session('owner')['id']) {
             return back()->with('status', 'Group not found');
         }
 
@@ -146,6 +147,6 @@ class GroupController extends Controller
 
         $group->delete();
 
-        return redirect()->route('groups')->with('success', 'Group deleted successfully');
+        return redirect()->route('groups.index')->with('success', 'Group deleted successfully');
     }
 }

@@ -24,16 +24,17 @@
                     <label for="input--name" class="col-md-2 col-form-label text-end">
                         Question Type <sup class="text-danger">*</sup>
                     </label>
-                    <div class="col-md-10">
-                        @foreach ($questionTypes as $k => $v)
-                            <div class="form-check form-radio-primary form-check-inline mt-2">
-                                <input class="form-check-input" type="radio" name="question_type" value="{{ $k }}"
-                                    {{ $k == $ques->question_type ? 'checked="true"' : '' }}
-                                    data-target="#block--optionPanel" data-label-text="{{ $v }}"
-                                    data-label-target="#fieldLabel--questionType">
-                                <label class="form-check-label">{{ $v }}</label>
-                            </div>
-                        @endforeach
+                    <div class="col-md-4">
+                        <select class="form-select" id="select--questionType" name="question_type" aria-label="Question Type">
+                            @foreach ($questionTypes as $k => $v)
+                                <option value="{{ $k }}" {{ $k == $ques->question_type ? 'selected' : '' }}
+                                    name="question_type"
+                                    data-target="#block--optionPanel"
+                                    data-label-text="{{ $v }}" data-label-target="#fieldLabel--questionType">
+                                        {{ $v }}
+                                    </option>
+                            @endforeach
+                        </select>
 
                         @error('question_type')
                             <div class="invalid-feedback d-block">
@@ -41,24 +42,11 @@
                             </div>
                         @enderror
                     </div>
-                </div>
-                <div class="mb-3 row">
-                    {{-- <label for="select--group" class="col-md-2 col-form-label text-end">
-                        Group
-                    </label>
-                    <div class="col-md-2">
-                        <select class="form-select" id="select--group" name="group" aria-label="Course select">
-                            <option selected value="">--</option>
-                            @foreach ($groups as $item)
-                                <option value="{{ $item->id }}">{{ $item->name }}</option>
-                            @endforeach
-                        </select>
-                    </div> --}}
 
                     <label for="select--difficulty" class="col-md-2 col-form-label text-end">
                         Difficulty Level
                     </label>
-                    <div class="col-md-2">
+                    <div class="col-md-4">
                         <select class="form-select" name="difficulty" id="select--difficulty"
                             aria-label="Difficulty Level">
                             @foreach (\App\Models\Question\Question::DIFFICULTIES as $k => $v)
@@ -72,6 +60,19 @@
                                 {{ $message }}
                             </div>
                         @enderror
+                    </div>
+                </div>
+                <div class="mb-3 row">
+                    <label for="select--group" class="col-md-2 col-form-label text-end">
+                        Group
+                    </label>
+                    <div class="col-md-2">
+                        <select class="form-select" id="select--group" name="group" aria-label="Course select">
+                            <option selected value="">--</option>
+                            @foreach ($groups as $item)
+                                <option value="{{ $item->id }}">{{ $item->name }}</option>
+                            @endforeach
+                        </select>
                     </div>
                 </div>
                 <div class="mb-3 row"">
@@ -164,7 +165,7 @@
                                                 value="{{ $item['content'] }}">
                                         </div>
                                         <div class="col-sm-1">
-                                            <button type="button" class="btn btn-danger btn-sm delete-confirm"
+                                            <button type="button" class="btn btn-danger btn-sm delete-confirm action-ajax"
                                                 data-url="{{ route('ajax.entity.delete') }}" data-parent=".row"
                                                 data-param="{{ json_encode([
                                                     '_method' => 'delete',

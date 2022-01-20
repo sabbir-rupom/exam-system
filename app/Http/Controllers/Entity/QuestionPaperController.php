@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use App\Models\Question\QuestionPaper;
 use App\Http\Requests\StoreQuestionPaperRequest;
 use App\Http\Requests\UpdateQuestionPaperRequest;
+use App\Models\Quiz\QuizQuestion;
+use Illuminate\Http\Request;
 
 class QuestionPaperController extends Controller
 {
@@ -32,10 +34,10 @@ class QuestionPaperController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \App\Http\Requests\StoreQuestionPaperRequest  $request
+    * @param  \App\Models\QuestionPaper  $questionPaper
      * @return \Illuminate\Http\Response
      */
-    public function store(StoreQuestionPaperRequest $request)
+    public function store(Request $request)
     {
         //
     }
@@ -59,7 +61,31 @@ class QuestionPaperController extends Controller
      */
     public function edit(QuestionPaper $questionPaper)
     {
-        //
+        if(empty($questionPaper) || empty($questionPaper->id)) {
+            return back()->with('status', 'Question paper not found');
+        }
+
+        $questions = [];
+        if($questionPaper->category === 'quiz') {
+            $tempQuestions = QuizQuestion::select('question_id', 'name', 'detail', 'question_type')
+                ->leftjoin('questions', 'quiz_questions.question_id', '=', 'questions.id')
+                ->where('quiz_id', $questionPaper->exam_id)
+                ->orderBy('quiz_questions.created_at', 'ASC')
+                ->get();
+        }
+
+        foreach ($tempQuestions as $ques) {
+            $questions[$ques->question_id] = [
+                'question' => $ques->detail ? $ques->detail : $ques->name,
+                'type' => intval($ques->question_type),
+                'id' => intval($ques->question_id),
+            ];
+        }
+
+        return view('entity.question-paper.edit', [
+            'questionPaper' => $questionPaper,
+            'questions' => json_encode($questions, JSON_UNESCAPED_UNICODE)
+        ]);
     }
 
     /**

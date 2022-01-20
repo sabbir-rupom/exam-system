@@ -107,11 +107,11 @@ async function fetchCall(url, data = [], method = 'POST', headers, callback = ''
             "X-CSRF-Token": $('meta[name="csrf-token"]').attr('content')
         };
 
-    if(headers) {
-        for( var key in headers ) {
-            if(key === 'token') {
+    if (headers) {
+        for (var key in headers) {
+            if (key === 'token') {
                 requestHeaders['X-CSRF-Token'] = headers[key];
-            } else{
+            } else {
                 requestHeaders[key] = headers[key];
             }
         }
@@ -137,10 +137,10 @@ async function fetchCall(url, data = [], method = 'POST', headers, callback = ''
         pageLoader(false);
 
         if (fetchResult.ok) {
-            if(result['refresh-csrf']) {
+            if (result['refresh-csrf']) {
                 $('meta[name="csrf-token"]').attr('content', result['refresh-csrf'])
             }
-            if(callback != '') {
+            if (callback != '') {
                 (new Function('return ' + callback)())();
                 return true;
             } else {
@@ -342,4 +342,30 @@ function formatAMPM(date)
     minutes = minutes < 10 ? '0' + minutes : minutes;
     var strTime = hours + ':' + minutes + ' ' + ampm;
     return strTime;
+}
+
+/**
+ * Concert formdata object to array object
+ *
+ * @param {*} formData
+ * @returns
+ */
+function formDataToArray(formData)
+{
+    let array = {};
+    formData.forEach((value, key) =>
+    {
+        key = key.replace('[]', '');
+        // Reflect.has in favor of: object.hasOwnProperty(key)
+        if (!Reflect.has(array, key)) {
+            array[key] = value;
+            return;
+        }
+        if (!Array.isArray(array[key])) {
+            array[key] = [array[key]];
+        }
+        array[key].push(value);
+    });
+
+    return array;
 }

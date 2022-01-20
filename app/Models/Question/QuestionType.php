@@ -23,22 +23,27 @@ class QuestionType extends Model
     /**
      * Get question types array [ ID => Text ] or type string
      *
-     * @param integer $id
+     * @param string $type
      * @return array|string
      */
-    public static function getTypes(int $id = 0)
+    public static function getTypes(string $type = 'all')
     {
 
         $result = [];
 
-        foreach (Question::EXAM_QUIZ as $key => $value) {
-            $result[$key] = $value['text'];
-        }
-        foreach (Question::EXAM_WRITTEN as $key => $value) {
-            $result[$key] = $value['text'];
-        }
-        if ($id > 0 && isset($result[$id])) {
-            return $result[$id];
+        if($type === 'quiz') {
+            foreach (Question::EXAM_QUIZ as $key => $value) {
+                $result[$key] = $value['text'];
+            }
+
+        } elseif($type === 'written') {
+            foreach (Question::EXAM_QUIZ as $key => $value) {
+                $result[$key] = $value['text'];
+            }
+        } else {
+            foreach ((Question::EXAM_QUIZ + Question::EXAM_WRITTEN) as $key => $value) {
+                $result[$key] = $value['text'];
+            }
         }
 
         return $result;

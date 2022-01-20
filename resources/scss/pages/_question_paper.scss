@@ -1,0 +1,16 @@
+#builder--panel {
+    .panel-box {
+        padding: 1rem;
+        border: 1px solid #eaeaea;
+        margin-bottom: 0.5rem;
+        cursor: pointer;
+        &:hover {
+            border: 1px solid #ddd;
+            background-color: #f9f9f9;
+        }
+
+        p {
+            margin-bottom: 0;
+        }
+    }
+}

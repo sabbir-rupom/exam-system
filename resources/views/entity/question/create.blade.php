@@ -23,34 +23,23 @@
                     <label for="input--name" class="col-md-2 col-form-label text-end">
                         Question Type <sup class="text-danger">*</sup>
                     </label>
-                    <div class="col-md-10">
-                        @foreach ($questionTypes as $k => $v)
-                            <div class="form-check form-radio-primary form-check-inline mt-2">
-                                <input class="form-check-input" type="radio" name="question_type" value="{{ $k }}"
-                                    {{ $k <= 1 ? 'checked="true"' : '' }} data-target="#block--optionPanel"
+                    <div class="col-md-6">
+                        <select class="form-select" id="select--questionType" name="question_type" aria-label="Question Type">
+                            @foreach ($questionTypes as $k => $v)
+                                <option value="{{ $k }}" {{ $k == \App\Models\Question\Question::TYPE_SINGLE ? 'selected' : '' }}
+                                    name="question_type"
+                                    data-target="#block--optionPanel"
                                     data-label-text="{{ $v }}" data-label-target="#fieldLabel--questionType">
-                                <label class="form-check-label">{{ $v }}</label>
-                            </div>
-                        @endforeach
+                                        {{ $v }}
+                                    </option>
+                            @endforeach
+                        </select>
 
                         @error('question_type')
                             <div class="invalid-feedback d-block">
                                 {{ $message }}
                             </div>
                         @enderror
-                    </div>
-                </div>
-                <div class="mb-3 row">
-                    <label for="select--group" class="col-md-2 col-form-label text-end">
-                        Group
-                    </label>
-                    <div class="col-md-2">
-                        <select class="form-select" id="select--group" name="group" aria-label="Course select">
-                            <option selected value="">--</option>
-                            @foreach ($groups as $item)
-                                <option value="{{ $item->id }}">{{ $item->name }}</option>
-                            @endforeach
-                        </select>
                     </div>
 
                     <label for="select--difficulty" class="col-md-2 col-form-label text-end">
@@ -70,6 +59,19 @@
                                 {{ $message }}
                             </div>
                         @enderror
+                    </div>
+                </div>
+                <div class="mb-3 row">
+                    <label for="select--group" class="col-md-2 col-form-label text-end">
+                        Group
+                    </label>
+                    <div class="col-md-2">
+                        <select class="form-select" id="select--group" name="group" aria-label="Course select">
+                            <option selected value="">--</option>
+                            @foreach ($groups as $item)
+                                <option value="{{ $item->id }}">{{ $item->name }}</option>
+                            @endforeach
+                        </select>
                     </div>
                 </div>
                 <div class="mb-3 row"">

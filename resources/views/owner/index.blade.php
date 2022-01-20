@@ -56,6 +56,27 @@
                         </div>
                     </div>
                 </div>
+                <div class="col-md-6">
+                    <div class="card dashboard-card">
+                        <div class="row no-gutters align-items-center">
+                            <div class="col-md-3">
+                                <div class="icon-box">
+                                    <i class="bx bx-grid"></i>
+                                </div>
+                            </div>
+                            <div class="col-md-9">
+                                <div class="card-body ps-0">
+                                    <div class="card-title">
+                                        <a href="{{ route('quizzes.index') }}">Quizzes</a>
+                                    </div>
+                                    <div class="card-text">
+                                        <a href="{{ route('quizzes.create') }}">New Quiz</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
                 {{-- <div class="col-md-6">
                     <div class="card dashboard-card">
                         <div class="row no-gutters align-items-center">

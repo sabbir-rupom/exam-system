@@ -59,6 +59,7 @@ class QuestionOption extends Model
     public static function addNew(Request $request, int $questionId)
     {
         if (in_array($request->question_type, [Question::TYPE_SINGLE, Question::TYPE_MULTIPLE, Question::TYPE_FILL_GAP])) {
+
             foreach ($request->option as $k => $val) {
                 if (empty($val)) {
                     continue;
