@@ -73,6 +73,7 @@
         "datatables.net-select-bs4": "^1.2.5",
         "dropzone": "^5.7.2",
         "gulp-rtlcss": "^1.4.1",
+        "html5sortable": "^0.13.3",
         "inputmask": "^4.0.9",
         "ion-rangeslider": "^2.3.0",
         "jquery": "^3.5.1",

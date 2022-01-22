@@ -49,6 +49,7 @@ var third_party_assets = {
         { "name": "bootstrap-datepicker", "assets": ["./node_modules/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js", "./node_modules/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css"] },
         { "name": "datepicker", "assets": ["./node_modules/@chenfengyuan/datepicker/dist/datepicker.min.js", "./node_modules/@chenfengyuan/datepicker/dist/datepicker.min.css"] },
         { "name": "bootstrap-timepicker", "assets": ["./node_modules/bootstrap-timepicker/css/bootstrap-timepicker.min.css", "./node_modules/bootstrap-timepicker/js/bootstrap-timepicker.min.js"] },
+        { "name": "html5sortable", "assets": ["./node_modules/html5sortable/dist/html5sortable.min.js"] },
     ]
 };
 

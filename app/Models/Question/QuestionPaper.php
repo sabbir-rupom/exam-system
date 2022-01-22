@@ -56,12 +56,15 @@ class QuestionPaper extends Model
                 $examQuestion[] = [
                     'id' => intval($ques->question_id),
                     // 'question' => $ques->detail ? $ques->detail : $ques->name,
-                    'question' => $ques->name,
+                    'value' => $ques->name,
                     'type' => intval($ques->question_type),
                     'mark' => 1,
                 ];
 
-                $usedQuestion[$ques->question_id] = $ques->name;
+                $usedQuestion[$ques->question_id] = [
+                    'value' => $ques->name,
+                    'type' => intval($ques->question_type)
+                ];
 
                 $qObj->qCnt--;
 
@@ -79,7 +82,12 @@ class QuestionPaper extends Model
         if(!empty($qPaper) && $qPaper->id > 0) {
             $dataObj = json_decode($qPaper->data);
 
-            dd($dataObj);
+            if(count((array)$dataObj->questions) === $dataObj->amount) {
+                return $qPaper;
+            } else {
+                dd($dataObj);
+            }
+
         } else {
             $qPaper = new QuestionPaper();
             $qPaper->category = $qObj->type;
@@ -95,6 +103,7 @@ class QuestionPaper extends Model
         }
 
         $qObj->data['questions'] = $usedQuestion;
+        $qObj->data['amount'] = intval($exam->question_amount);
 
         $qPaper->data = json_encode($qObj->data, JSON_UNESCAPED_UNICODE);
         $qPaper->save();

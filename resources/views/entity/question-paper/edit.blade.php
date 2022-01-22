@@ -22,9 +22,9 @@
                     data-form-body="#panel--formBody" data-form-footer="#panel--formFooter" data-json="#input--json"
                     data-questions="#input--questions" data-form-modal="#modal--handleForm">
                     <div class="box-main col-md-12 {{-- col-lg-9 col-md-12order-md-2 --}}">
-                        <div id="panel--formHeader" class="panel-box"></div>
+                        <div id="panel--formHeader" class="panel-box editor"></div>
                         <div id="panel--formBody" class="panel-box"></div>
-                        <div id="panel--formFooter" class="panel-box"></div>
+                        <div id="panel--formFooter" class="panel-box editor"></div>
                     </div>
                     {{-- <div class="box-sidebar bg-warning col-lg-9 col-md-12 order-md-1">
 
@@ -61,6 +61,7 @@
 @section('script')
     <!--tinymce js-->
     <script src="{{ URL::asset('assets/libs/tinymce/tinymce.min.js') }}"></script>
+    <script src="{{ URL::asset('assets/libs/html5sortable/html5sortable.min.js') }}"></script>
 @endsection
 
 @section('script-bottom')
