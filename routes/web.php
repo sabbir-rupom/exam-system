@@ -1,8 +1,7 @@
 <?php
 
 use App\Http\Controllers\HomeController;
-use App\Http\Controllers\Owner\DashboardController as OwnerDashboard;
-use App\Http\Controllers\Admin\DashboardController as AdminDashboard;
+use App\Http\Controllers\User\DashboardController;
 
 use App\Http\Controllers\Entity\QuestionController as EntityQuestion;
 use App\Http\Controllers\Entity\QuestionPaperController as EntityQuestionPaper;
@@ -32,37 +31,39 @@ Route::group(['middleware' => 'guest'], function () {
 
 Route::middleware(['auth'])->group(function () {
 
-    Route::group(['middleware' => 'role.user:admin', 'prefix' => 'admin'], function () {
+    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+
+    // Route::group(['middleware' => 'role.user:admin', 'prefix' => 'admin'], function () {
+    Route::group(['middleware' => 'role.user:admin'], function () {
         /**
          * Include admin related route definitions
          */
-        Route::get('/dashboard', [AdminDashboard::class, 'index'])->name('admin.dashboard');
 
     });
 
 
-    Route::group(['middleware' => 'role.user:owner'], function () {
-        /**
-         * Include admin related route definitions
-         */
-        Route::get('/dashboard', [OwnerDashboard::class, 'index'])->name('owner.dashboard');
+    // Route::group(['middleware' => 'role.user:owner'], function () {
+    //     /**
+    //      * Include admin related route definitions
+    //      */
+    //     Route::get('/dashboard', [OwnerDashboard::class, 'index'])->name('owner.dashboard');
 
-        // Question management routes
-        Route::resource('questions', EntityQuestion::class);
+    //     // Question management routes
+    //     Route::resource('questions', EntityQuestion::class);
 
-        // Group management routes
-        Route::resource('groups', EntityGroup::class);
+    //     // Group management routes
+    //     Route::resource('groups', EntityGroup::class);
 
-        // Quiz management routes
-        Route::resource('quizzes', EntityQuiz::class);
+    //     // Quiz management routes
+    //     Route::resource('quizzes', EntityQuiz::class);
 
-        // Question paper management routes
-        Route::get('question-papers',  [EntityQuestionPaper::class, 'index'])->name('question-papers.index');
-        Route::get('question-papers/{questionPaper}',  [EntityQuestionPaper::class, 'show'])->name('question-papers.show');
-        Route::put('question-papers/{questionPaper}',  [EntityQuestionPaper::class, 'edit'])->name('question-papers.update');
-        Route::get('question-papers/{questionPaper}/edit',  [EntityQuestionPaper::class, 'edit'])->name('question-papers.edit');
-        // Route::resource('question-papers/{questionPaper}/edit', EntityQuestionPaper::class);
-    });
+    //     // Question paper management routes
+    //     Route::get('question-papers',  [EntityQuestionPaper::class, 'index'])->name('question-papers.index');
+    //     Route::get('question-papers/{questionPaper}',  [EntityQuestionPaper::class, 'show'])->name('question-papers.show');
+    //     Route::put('question-papers/{questionPaper}',  [EntityQuestionPaper::class, 'edit'])->name('question-papers.update');
+    //     Route::get('question-papers/{questionPaper}/edit',  [EntityQuestionPaper::class, 'edit'])->name('question-papers.edit');
+    //     // Route::resource('question-papers/{questionPaper}/edit', EntityQuestionPaper::class);
+    // });
 
     /**
      * Ajax route management

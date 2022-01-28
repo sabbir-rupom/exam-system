@@ -23,42 +23,16 @@ class UserSeeder extends Seeder
          * Create admin user
          */
         $user = \App\Models\User::firstOrCreate([
-            'name' => 'admin_user',
+            'name' => 'Admin User',
             'email' => 'admin@gmail.com',
             'password' => Hash::make('admin1123'),
+            'username' => 'admin',
             'email_verified_at' => Carbon::now(),
             'dob' => Carbon::now()
         ]);
 
         $user->attachRole('admin');
         $user->attachPermissions(['all-create', 'all-read', 'all-update', 'all-delete']);
-
-        $owner = \App\Models\Owner::firstOrCreate([
-            'user_id' => $user->id,
-            'status' => true,
-            'domain' => 'admin',
-            'activated_at' => Carbon::now(),
-        ]);
-
-        /**
-         * Create test user with ownership
-         */
-        $userOwner = \App\Models\User::firstOrCreate([
-            'name' => 'Test',
-            'email' => 'test@gmail.com',
-            'password' => Hash::make('test1123'),
-            'email_verified_at' => Carbon::now(),
-            'dob' => Carbon::now()
-        ]);
-
-        $userOwner->attachRole('owner');
-
-        $owner = \App\Models\Owner::firstOrCreate([
-            'user_id' => $userOwner->id,
-            'status' => true,
-            'domain' => 'sabbir',
-            'activated_at' => Carbon::now(),
-        ]);
 
     }
 

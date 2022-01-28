@@ -15,7 +15,7 @@ class AddUniqueNameToUsersTable extends Migration
     {
         Schema::table('users', function (Blueprint $table) {
             $table->string('username')->after('name')->nullable()->unique();
-            $table->string('mobile')->after('username')->nullable()->unique();
+            $table->string('phone')->after('username')->nullable()->unique();
             $table->string('photo')->after('email')->nullable();
             $table->string('verification_code', 12)->after('email_verified_at')->nullable();
             $table->boolean('blocked')->after('verification_code')->default(0);
@@ -31,7 +31,7 @@ class AddUniqueNameToUsersTable extends Migration
     {
         Schema::table('users', function (Blueprint $table) {
             $table->dropColumn('username');
-            $table->dropColumn('mobile');
+            $table->dropColumn('phone');
             $table->dropColumn('photo');
             $table->dropColumn('verification_code');
             $table->dropColumn('blocked');

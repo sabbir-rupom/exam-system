@@ -46,13 +46,17 @@ class FortifyServiceProvider extends ServiceProvider
             return view('auth.login');
         });
 
+        Fortify::verifyEmailView(function () {
+            return view('auth.verify-email');
+        });
+
         Fortify::authenticateUsing(function (Request $request) {
             return AuthenticationLogin::process($request);
         });
 
         Fortify::registerView(function () {
 
-            return redirect('/');
+            // return redirect('/');
             return view('auth.register');
         });
 

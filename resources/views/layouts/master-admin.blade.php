@@ -3,19 +3,23 @@
 
 <head>
     <meta charset="utf-8" />
-    <title> @yield('title') | Dikkha: Admin</title>
-    <meta content="Dikkha LMS" name="description" />
-    <meta content="Dikkha" name="author" />
+    <title>
+        @hasSection('title') @yield('title') | @endif {{ sur_title('Admin') }}
+    </title>
+
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- App favicon -->
     <link rel="shortcut icon" href="{{ URL::asset('assets/images/favicon.ico') }}">
     <meta name="csrf-token" content="{{ csrf_token() }}">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     @include('layouts.head-css')
 </head>
 
 @section('body')
 
-<body data-sidebar="dark">
+    <body data-sidebar="dark">
     @show
     <!-- Begin page -->
     <div id="layout-wrapper">
@@ -27,10 +31,10 @@
         <div class="main-content">
             <div class="page-content">
                 @if ($message = Session::get('warning'))
-                <div class="alert alert-warning alert-block">
-                    <button type="button" class="close" data-dismiss="alert">×</button>
-                    <strong>{{ $message }}</strong>
-                </div>
+                    <div class="alert alert-warning alert-block">
+                        <button type="button" class="close" data-dismiss="alert">×</button>
+                        <strong>{{ $message }}</strong>
+                    </div>
                 @endif
                 <div class="container-fluid">
                     @yield('content')

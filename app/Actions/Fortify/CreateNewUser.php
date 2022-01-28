@@ -2,12 +2,7 @@
 
 namespace App\Actions\Fortify;
 
-use App\Library\Notification\Email;
-use App\Models\Organization;
-use App\Models\Teacher;
 use App\Models\User;
-use App\Models\UserOwner;
-use App\Models\UserProfile;
 use Carbon\Carbon;
 use Illuminate\Database\QueryException;
 use Illuminate\Support\Facades\DB;
@@ -33,33 +28,27 @@ class CreateNewUser implements CreatesNewUsers
 
         DB::beginTransaction();
 
+        $userArray = [
+            'email' => $input['email'],
+            'password' => Hash::make($input['password'])
+        ];
+
         try {
-            $user = User::create([
-                'name' => trim($input['firstname'] . ' ' . $input['lastname']),
-                'username' => $input['username'],
-                'mobile' => $input['phone'],
-                'email' => $input['email'],
-                'password' => Hash::make($input['password'])
-            ]);
+            $userArray['name'] = isset($input['name']) ? trim($input['name']) : (
+                isset($input['firstname']) ? trim($input['firstname'] . (isset($input['lastname']) ? ' ' . $input['lastname'] : '')) : null
+            );
+
+            $userArray['phone'] = isset($input['phone']) ? $input['phone'] : null;
+
+            $userArray['username'] = $this->_getUsername($input);
+
+            $user = User::create($userArray);
+
             $user->attachRole('teacher');
 
             DB::commit();
 
             Session::flash('success', 'User registration successful');
-
-            // $emailStatus = Email::getInstance()->initConfig([
-            //     'receiver' => $user->email,
-            //     'type' => 'new-user',
-            //     'data' => [
-            //         'fullname' => $input['firstname'] . ' ' . $input['lastname'],
-            //         'url' => url('/user/activate') . '?data=' . \App\Actions\UserActivation::init($user),
-            //         'username' => $user->email,
-            //     ],
-            // ])->send();
-            // if ($emailStatus !== true) {
-            //     Session::flash('status', 'Sorry! ' . (is_string($emailStatus) ? $emailStatus : 'Failed to send email for account activation'));
-            //     Session::flash('mail-failure', 1);
-            // }
 
             $user->email_verified_at = Carbon::now();
             $user->save();
@@ -70,7 +59,7 @@ class CreateNewUser implements CreatesNewUsers
             throw $ex;
         } catch (\Throwable $th) {
             DB::rollBack();
-            Session::flash('status', $ex->getMessage());
+            Session::flash('status', $th->getMessage());
             throw $th;
         }
 
@@ -86,9 +75,6 @@ class CreateNewUser implements CreatesNewUsers
     private function _validateRequest(array $input)
     {
         $validationRules = [
-            'username' => ['required', 'string', 'max:100', Rule::unique(User::class)],
-            'firstname' => ['required', 'string', 'max:100'],
-            'lastname' => ['max:100'],
             'email' => [
                 'required',
                 'string',
@@ -100,8 +86,44 @@ class CreateNewUser implements CreatesNewUsers
             'password_confirmation' => ['required', 'same:password'],
         ];
 
-        $validationRules['phone'] = ['required', 'string', 'min:8', 'max:15'];
+        if(isset($input['username'])) {
+            $validationRules['username'] = ['required', 'string', 'max:100', Rule::unique(User::class)];
+        }
+
+        if(isset($input['firstname'])) {
+            $validationRules['firstname'] = ['required', 'string', 'max:100'];
+        }
+
+        if(isset($input['phone'])) {
+            $validationRules['phone'] = ['required', 'phone', Rule::unique(User::class)];
+        }
+
+        if(isset($input['lastname']) && !empty($input['lastname'])) {
+            $validationRules['lastname'] = ['string', 'max:100'];
+        }
 
         Validator::make($input, $validationRules)->validate();
+    }
+
+    /**
+     * Validate and return unique username
+     *
+     * @param array $input
+     * @return string
+     */
+    private function _getUsername(array $input) :string {
+        $username = isset($input['username']) ? trim($input['username']) : '';
+
+        if(empty($username)) {
+            $username = explode('@', $input['email'])[0];
+        }
+
+        $temp = $username;
+
+        while(User::where('username', $temp)->exists()) {
+            $temp = $username . rand(1, 9999);
+        }
+
+        return $temp;
     }
 }

@@ -11,8 +11,9 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Laratrust\Traits\LaratrustUserTrait;
 use Yadahan\AuthenticationLog\AuthenticationLogable;
+use Illuminate\Contracts\Auth\MustVerifyEmail;
 
-class User extends Authenticatable
+class User extends Authenticatable implements MustVerifyEmail
 {
     use LaratrustUserTrait;
     use HasFactory, Notifiable, AuthenticationLogable;
@@ -27,7 +28,7 @@ class User extends Authenticatable
         'username',
         'email',
         'photo',
-        'mobile',
+        'phone',
         'password',
         'verification_code',
     ];
@@ -54,7 +55,6 @@ class User extends Authenticatable
     /**
      * User Role is defined according to database table
      */
-    const ROLE_OWNER = 1;
     const ROLE_TEACHER = 2;
     const ROLE_STUDENT = 3;
 
@@ -65,7 +65,6 @@ class User extends Authenticatable
     const ROLE_TYPES = [
         self::ROLE_STUDENT => 'student',
         self::ROLE_TEACHER => 'teacher',
-        self::ROLE_OWNER => 'owner',
     ];
 
     /**
@@ -79,7 +78,7 @@ class User extends Authenticatable
     public static function getUsers($pagination = true, Request $request = null, $all = true)
     {
 
-        $users = User::select('id', 'name', 'email', 'username', 'mobile', 'email_verified_at');
+        $users = User::select('id', 'name', 'email', 'username', 'phone', 'email_verified_at');
 
         if ($request && isset($request->name_key) && !empty($request->name_key)) {
             $users = $users->where(function ($query) use ($request) {
@@ -108,7 +107,7 @@ class User extends Authenticatable
 
     public static function getUser(int $userId)
     {
-        return User::select('users.id', 'users.name', 'email', 'users.username', 'photo', 'mobile', 'authentication_log.login_at', 'email_verified_at')
+        return User::select('users.id', 'users.name', 'email', 'users.username', 'photo', 'phone', 'authentication_log.login_at', 'email_verified_at')
             ->leftJoin('authentication_log', 'users.id', '=', 'authentication_log.authenticatable_id')
             ->where('users.id', $userId)
             ->orderBy('authentication_log.id', 'DESC')
@@ -145,7 +144,7 @@ class User extends Authenticatable
                 'name' => $userData['fullname'],
                 'username' => $username,
                 'email' => $userData['email'],
-                'mobile' => $userData['mobile'],
+                'phone' => $userData['phone'],
                 'password' => Hash::make($userData['password']),
             ]);
             $user->attachRole('teacher');

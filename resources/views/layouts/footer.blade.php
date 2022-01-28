@@ -15,20 +15,12 @@
     <div class="container-fluid">
         <div class="row">
             <div class="col-sm-12">
-                @admin
                 <p class="text-end">
                     <script>
                         document.write(new Date().getFullYear())
-                    </script> © Dikkha LMS
+                    </script> © {{ env('APP_NAME', 'Exam Management System') }}
                 </p>
-                @else
-                <p class="text-center">
-                    <script>
-                        document.write(new Date().getFullYear())
-                    </script> © Dikkha LMS
-                </p>
-                @endadmin
-                </div>
+            </div>
         </div>
     </div>
 </footer>

@@ -1,4 +1,4 @@
-// 
+//
 // authentication.scss
 //
 
@@ -13,6 +13,11 @@
 // auth 2
 
 .auth-logo{
+
+    img {
+        max-height: 60px;
+    }
+
     .auth-logo-dark{
         display: $display-block;
     }
@@ -45,7 +50,7 @@
     @media (min-width: 1200px){
         height: 100vh;
     }
-    
+
 
     &::before{
         content: "";

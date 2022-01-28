@@ -2,9 +2,9 @@
 
 use App\Library\Resource\FileStorage;
 use App\Models\Question\Question;
-use Illuminate\Database\Eloquent\Model;
 use App\Models\User;
 use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Exceptions\HttpResponseException;
 use Illuminate\Support\Str;
 
@@ -69,6 +69,20 @@ if (!function_exists('has_role')) {
     function has_role(User $user = null, string $role)
     {
         return $user && $user->hasRole($role);
+    }
+}
+
+if (!function_exists('no_role')) {
+    /**
+     * Check user session has no role
+     *
+     * @return boolean
+     */
+    function no_role()
+    {
+        $isAdmin = session()->get('is_admin');
+        $isUser = session()->get('is_teacher') || session()->get('is_student');
+        return empty($isAdmin) && empty($isUser);
     }
 }
 
@@ -292,7 +306,8 @@ if (!function_exists('few_words')) {
      * @param integer $K
      * @return void
      */
-    function few_words(string $message, int $K = 20) {
+    function few_words(string $message, int $K = 20)
+    {
 
         if ($K < 1) {
             return '';
@@ -302,13 +317,13 @@ if (!function_exists('few_words')) {
             return trim($message);
         }
 
-        if($message[$K] === " ") {
-            return trim(substr($message,0,$K));
+        if ($message[$K] === " ") {
+            return trim(substr($message, 0, $K));
         }
 
-        while($message[--$K] !== ' ');
+        while ($message[--$K] !== ' ');
 
-        return trim(substr($message,0,$K));
+        return trim(substr($message, 0, $K));
     }
 }
 
@@ -320,7 +335,8 @@ if (!function_exists('slug_create')) {
      * @param integer $K
      * @return void
      */
-    function slug_create(string $string) {
+    function slug_create(string $string)
+    {
 
         if (strlen($string) > 50) {
             $string = few_words($string, 50);
@@ -359,16 +375,16 @@ if (!function_exists('exam_status')) {
      * @param integer $status
      * @return string
      */
-    function exam_status(int $status): string
-    {
-        if ($status == Quiz::RESULT_PASS) {
-            return '<span class="text-success">Passed</span>';
-        } elseif ($status == Quiz::RESULT_FAIL) {
-            return '<span class="text-danger">Failed</span>';
-        } else {
-            return '<span class="text-secondary">Pending</span>';
-        }
-    }
+    // function exam_status(int $status): string
+    // {
+    //     if ($status == Quiz::RESULT_PASS) {
+    //         return '<span class="text-success">Passed</span>';
+    //     } elseif ($status == Quiz::RESULT_FAIL) {
+    //         return '<span class="text-danger">Failed</span>';
+    //     } else {
+    //         return '<span class="text-secondary">Pending</span>';
+    //     }
+    // }
 }
 
 // if (!function_exists('badge_status')) {
@@ -606,6 +622,21 @@ if (!function_exists('session_profile')) {
         }
 
         return '';
+
+    }
+}
+
+if (!function_exists('sur_title')) {
+    /**
+     * Get web-application main title
+     *
+     * @return string
+     */
+    function sur_title(string $str = ''): string
+    {
+        return (!empty($str) ? "$str - " : '') . (
+            array_key_exists('sur_title', trans('translation')) ? __('translation.sur_title') : env('APP_NAME', 'Welcome')
+        );
 
     }
 }
