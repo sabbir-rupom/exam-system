@@ -6,7 +6,7 @@
             @hasSection('title') @yield('title') | @endif {{ sur_title() }}
         </title>
 
-        @include('layouts.meta-head')
+        @include('layouts.head-meta')
 
         @include('layouts.head-css')
   </head>

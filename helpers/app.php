@@ -635,7 +635,7 @@ if (!function_exists('sur_title')) {
     function sur_title(string $str = ''): string
     {
         return (!empty($str) ? "$str - " : '') . (
-            array_key_exists('sur_title', trans('translation')) ? __('translation.sur_title') : env('APP_NAME', 'Welcome')
+            array_key_exists('sur_title', trans('translation')) ? __('translation.sur_title') : config('app.name')
         );
 
     }

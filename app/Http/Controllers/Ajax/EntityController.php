@@ -6,14 +6,14 @@ use App\Http\Controllers\Controller;
 use App\Models\Question\Question;
 use App\Models\Question\QuestionGroup;
 use App\Models\Question\QuestionOption;
+use App\Traits\AppResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
-use App\Traits\ResponseJSON;
 use Illuminate\Support\Facades\Validator;
 
 class EntityController extends Controller
 {
-    use ResponseJSON;
+    use AppResponse;
 
     public function create(Request $request) {
         if(empty($request->entity) || empty($request->type)) {

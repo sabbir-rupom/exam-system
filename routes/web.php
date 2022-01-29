@@ -3,14 +3,11 @@
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\User\DashboardController;
 
-use App\Http\Controllers\Entity\QuestionController as EntityQuestion;
-use App\Http\Controllers\Entity\QuestionPaperController as EntityQuestionPaper;
-use App\Http\Controllers\Entity\GroupController as EntityGroup;
-use App\Http\Controllers\Entity\QuizController as EntityQuiz;
-
 use App\Http\Controllers\Ajax\ComponentController as AjaxComponent;
 use App\Http\Controllers\Ajax\EntityController as AjaxEntity;
-
+use App\Module\CourseCatalogue\Controllers\CategoryClassController;
+use App\Module\CourseCatalogue\Controllers\CategoryController;
+use App\Module\CourseCatalogue\Controllers\SubjectController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -38,7 +35,11 @@ Route::middleware(['auth'])->group(function () {
         /**
          * Include admin related route definitions
          */
-
+        Route::group(['prefix' => 'entity', 'as'=>'entity.'], function(){
+            Route::resource('category', CategoryController::class);
+            Route::resource('category-class', CategoryClassController::class);
+            Route::resource('subject', SubjectController::class);
+        });
     });
 
 

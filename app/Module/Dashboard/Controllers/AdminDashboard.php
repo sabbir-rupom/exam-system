@@ -2,20 +2,17 @@
 
 namespace App\Module\Dashboard\Controllers;
 
-use App\Traits\AppResponse;
+use App\Module\BaseAction;
 use Illuminate\Http\Request;
-
-class AdminDashboard
+class AdminDashboard extends BaseAction
 {
-    use AppResponse;
+    public function get(Request $request) {
+        return $this->init($request)->action();
+    }
 
-    public function init(Request $request) {
+    private function init(Request $request) {
+        $this->setView('module.dashboard.admin');
         return $this;
     }
 
-
-    private function action()
-    {
-        return $this->response();
-    }
 }

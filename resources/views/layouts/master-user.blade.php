@@ -7,7 +7,7 @@
         @hasSection('title') @yield('title') | @endif {{ sur_title() }}
     </title>
 
-    @include('layouts.meta-head')
+    @include('layouts.head-meta')
 
     @include('layouts.head-css')
 </head>
@@ -19,10 +19,10 @@
     <!-- Begin page -->
     <div id="layout-wrapper">
         @admin
-            @include('layouts.admin-topbar')
-            @include('layouts.admin-sidebar')
+            @include('layouts.navs.admin-topbar')
+            @include('layouts.navs.admin-sidebar')
         @else
-            @include('layouts.user-topbar')
+            @include('layouts.navs.user-topbar')
         @endadmin
 
         <!-- ============================================================== -->

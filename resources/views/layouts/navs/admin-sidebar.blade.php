@@ -17,6 +17,26 @@
                 </li>
                 <li>
                     <a href="javascript: void(0);" class="has-arrow waves-effect">
+                        <i class="mdi mdi-format-list-text"></i>
+                        <span key="t-manage-catalogue">Manage Catalogue</span>
+                    </a>
+                    <ul class="sub-menu" aria-expanded="false">
+                        <li><a href="{{ route('entity.category.index') }}" key="t-entity-category">
+                            <i class="bx bx-chevron-right"></i>
+                            Category
+                        </a></li>
+                        <li><a href="{{ route('entity.category-class.index') }}" key="t-entity-class">
+                            <i class="bx bx-chevron-right"></i>
+                            Class
+                        </a></li>
+                        <li><a href="{{ route('entity.subject.index') }}" key="t-entity-subject">
+                            <i class="bx bx-chevron-right"></i>
+                            Subject
+                        </a></li>
+                    </ul>
+                </li>
+                {{-- <li>
+                    <a href="javascript: void(0);" class="has-arrow waves-effect">
                         <i class="mdi mdi-cog"></i>
                         <span key="t-system-settings">Settings</span>
                     </a>
@@ -26,7 +46,7 @@
                             Email
                         </a></li>
                     </ul>
-                </li>
+                </li> --}}
 
             </ul>
         </div>

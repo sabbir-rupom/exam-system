@@ -2,7 +2,7 @@
 @php
 $title = isset($pageTitle) && $pageTitle ? $pageTitle : $breadTitle;
 @endphp
-<div class="theme-bread-style p-3">
+<div class="theme-bread-style mb-3">
     <div class="d-sm-flex">
         <ol class="breadcrumb m-0 p-0">
             @isset($breadSingle)

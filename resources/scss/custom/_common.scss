@@ -10,14 +10,6 @@ input[type=number] {
     -moz-appearance: textfield;
 }
 
-.preview-image {
-    img {
-        max-width: 100%;
-        max-height: 100px;
-        margin: 0 auto;
-    }
-}
-
 .small-text {
     font-size: 11px !important;
 }
@@ -53,6 +45,14 @@ h4,
 h5,
 h6 {
     color: black;
+}
+
+hr {
+    background-color: #ccc;
+}
+
+#preloader {
+    opacity: 0.9;
 }
 
 .badge-status {
@@ -93,6 +93,14 @@ h6 {
     }
 }
 
+.preview-image {
+    img {
+        max-width: 100%;
+        max-height: 100px;
+        margin: 0 auto;
+    }
+}
+
 .select2-results__option[aria-selected=true] {
     display: none;
 }
@@ -103,14 +111,6 @@ form {
             text-align: right;
         }
     }
-}
-
-hr {
-    background-color: #ccc;
-}
-
-#preloader {
-    opacity: 0.9;
 }
 
 .box-loader {
@@ -199,5 +199,23 @@ fieldset.scheduler-border {
     iframe {
         width: 100%;
         min-height: 250px;
+    }
+}
+
+#sidebar-menu {
+    ul {
+        li {
+            ul.sub-menu {
+                li {
+                    a {
+                        padding-left: 3rem;
+
+                        i {
+                            min-width: 1.5rem;
+                        }
+                    }
+                }
+            }
+        }
     }
 }

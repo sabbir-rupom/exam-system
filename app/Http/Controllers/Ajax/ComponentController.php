@@ -4,14 +4,14 @@ namespace App\Http\Controllers\Ajax;
 
 use App\Http\Controllers\Controller;
 use App\Models\Question\Question;
+use App\Traits\AppResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
-use App\Traits\ResponseJSON;
 use Illuminate\Support\Facades\Validator;
 
 class ComponentController extends Controller
 {
-    use ResponseJSON;
+    use AppResponse;
 
     public function index(Request $request)
     {

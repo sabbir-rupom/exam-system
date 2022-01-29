@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Models;
+namespace App\Module\CourseCatalogue\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Setting extends Model
+class CategoryClass extends Model
 {
     use HasFactory;
 
@@ -15,7 +15,8 @@ class Setting extends Model
      * @var array
      */
     protected $fillable = [
-        'field',
-        'value',
+        'category_id',
+        'name',
+        'code',
     ];
 }
