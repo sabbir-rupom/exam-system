@@ -14,32 +14,41 @@
 
 @section('body')
 
-    <body data-layout="horizontal">
+    <body data-sidebar="dark">
     @show
-
     <!-- Begin page -->
     <div id="layout-wrapper">
-        @include('layouts.user-topbar')
-        {{-- @include('layouts.user-sidebar') --}}
+        @admin
+            @include('layouts.admin-topbar')
+            @include('layouts.admin-sidebar')
+        @else
+            @include('layouts.user-topbar')
+        @endadmin
+
         <!-- ============================================================== -->
         <!-- Start right Content here -->
         <!-- ============================================================== -->
         <div class="main-content">
-            <div class="page-content app-page">
-                <!-- Start content -->
-                @yield('content')
-                <!-- content -->
+            <div class="page-content">
+                @if ($message = Session::get('warning'))
+                    <div class="alert alert-warning alert-block">
+                        <button type="button" class="close" data-dismiss="alert">×</button>
+                        <strong>{{ $message }}</strong>
+                    </div>
+                @endif
+                <div class="container-fluid">
+                    @yield('content')
+                </div>
+                <!-- container-fluid -->
             </div>
+            <!-- End Page-content -->
             @include('layouts.footer')
         </div>
-        <!-- ============================================================== -->
-        <!-- End Right content here -->
-        <!-- ============================================================== -->
+        <!-- end main content-->
     </div>
-    <!-- END wrapper -->
+    <!-- END layout-wrapper -->
 
-    <!-- END Right Sidebar -->
-
+    <!-- JAVASCRIPT -->
     @include('layouts.app-scripts')
 </body>
 

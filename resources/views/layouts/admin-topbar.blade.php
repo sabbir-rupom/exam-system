@@ -2,23 +2,13 @@
     <div class="navbar-header">
         <div class="d-flex">
             <!-- LOGO -->
-            <div class="navbar-brand-box">
-                <a href="{{ url('/') }}" class="logo logo-dark">
-                    <span class="logo-sm">
-                        <img class="mobile-show" src="{{ URL::asset ('/assets/images/logo.png') }}" alt="Dikkha Logo">
-                        <img class="device-lg-show" src="{{ URL::asset ('/assets/images/logo.png') }}" alt="Dikkha Logo">
+            <div class="navbar-brand-box d-flex justify-content-center align-items-center">
+                <a href="{{ url('/') }}" class="logo logo-light text-light">
+                    <span class="logo-sm h3 text-light">
+                        <strong>A</strong>
                     </span>
-                    <span class="logo-lg">
-                        <img src="{{ URL::asset ('/assets/images/logo.png') }}" alt="Somriddhi Logo" style="max-height: 50px; width: 80px;">
-                    </span>
-                </a>
-
-                <a href="{{ url('/') }}" class="logo logo-light">
-                    <span class="logo-sm">
-                        <img src="{{ URL::asset ('/assets/images/logo.png') }}" class="img-fluid">
-                    </span>
-                    <span class="logo-lg">
-                        <img src="{{ URL::asset ('/assets/images/logo.png') }}" class="img-fluid" style="max-height: 50px; width: 80px;">
+                    <span class="logo-lg h3 text-light">
+                        <strong>Admin Panel</strong>
                     </span>
                 </a>
             </div>

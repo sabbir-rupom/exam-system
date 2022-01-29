@@ -15,6 +15,16 @@ class DashboardController extends Controller
             return redirect()->route('login');
         }
 
-        dd(123);
+        return has_role(auth()->user(), 'admin|superadmin') ? $this->adminDashboard() : $this->userDashboard();
+
+        // return view('user.index', $viewParams);
+    }
+
+    protected function adminDashboard() {
+        return [];
+    }
+
+    protected function userDashboard() {
+        return [];
     }
 }
