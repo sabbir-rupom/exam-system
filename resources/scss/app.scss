@@ -6,83 +6,6 @@ body {
     font-family: "Hind Siliguri", "Poppins", sans-serif;
 }
 
-.auth-home {
-    .input-group-text.label {
-        background-color: white;
-        min-width: 100px;
-        font-weight: 500;
-        text-align: right;
-    }
-}
-
-.navbar-header {
-    padding: 0;
-    .navbar-brand-box {
-        padding: 0 1rem;
-    }
-}
-
-body[data-layout="horizontal"] .page-content {
-    &.app-page {
-        max-width: 85%;
-        margin: 90px auto;
-        padding: 0;
-        background: white;
-        border-radius: 0.3rem;
-
-        .theme-bread-style {
-            background-color: #0d3f77;
-            color: white;
-            border-top-left-radius: 0.3rem;
-            border-top-right-radius: 0.3rem;
-
-            .breadcrumb-item > a {
-                color: white;
-            }
-            .breadcrumb-item.active {
-                color: azure;
-            }
-
-            .breadcrumb-item + .breadcrumb-item::before {
-                color: whitesmoke;
-            }
-        }
-    }
-}
-
-.navbar-header .topnav .navbar-nav .nav-item .nav-link {
-    line-height: 36px;
-    padding: 1rem 0.85rem;
-}
-
-@media screen and (max-width: 992px) {
-    .topnav {
-        position: absolute;
-        left: 0;
-        top: 70px;
-        width: 100%;
-        padding: 0;
-
-        &.active {
-            border-bottom: 1px solid #ddd;
-        }
-
-        .navbar-nav {
-            padding: 0.5rem 0;
-
-            .nav-item {
-                .nav-link {
-                    color: #050505;
-
-                    &.active {
-                        color: #495057;
-                    }
-                }
-            }
-        }
-    }
-}
-
 .dashboard-card {
     -webkit-box-shadow: none;
     box-shadow: none;
@@ -103,11 +26,82 @@ body[data-layout="horizontal"] .page-content {
     }
 }
 
-@media only screen and (max-width: 1200px) {
-    body[data-layout="horizontal"] .page-content.app-page,
-    .container-fluid {
-        max-width: 100%;
-    }
-}
-
 @import "pages/question_paper";
+
+
+// .auth-home {
+//     .input-group-text.label {
+//         background-color: white;
+//         min-width: 100px;
+//         font-weight: 500;
+//         text-align: right;
+//     }
+// }
+
+// .navbar-header {
+//     padding: 0;
+//     .navbar-brand-box {
+//         padding: 0 1rem;
+//     }
+// }
+
+// body[data-layout="horizontal"] .page-content {
+//     &.app-page {
+//         max-width: 85%;
+//         margin: 90px auto;
+//         padding: 0;
+//         background: white;
+//         border-radius: 0.3rem;
+
+//         .theme-bread-style {
+//             background-color: #0d3f77;
+//             color: white;
+//             border-top-left-radius: 0.3rem;
+//             border-top-right-radius: 0.3rem;
+
+//             .breadcrumb-item > a {
+//                 color: white;
+//             }
+//             .breadcrumb-item.active {
+//                 color: azure;
+//             }
+
+//             .breadcrumb-item + .breadcrumb-item::before {
+//                 color: whitesmoke;
+//             }
+//         }
+//     }
+// }
+
+// .navbar-header .topnav .navbar-nav .nav-item .nav-link {
+//     line-height: 36px;
+//     padding: 1rem 0.85rem;
+// }
+
+// @media screen and (max-width: 992px) {
+//     .topnav {
+//         position: absolute;
+//         left: 0;
+//         top: 70px;
+//         width: 100%;
+//         padding: 0;
+
+//         &.active {
+//             border-bottom: 1px solid #ddd;
+//         }
+
+//         .navbar-nav {
+//             padding: 0.5rem 0;
+
+//             .nav-item {
+//                 .nav-link {
+//                     color: #050505;
+
+//                     &.active {
+//                         color: #495057;
+//                     }
+//                 }
+//             }
+//         }
+//     }
+// }

@@ -8,7 +8,7 @@ use App\Module\CourseCatalogue\Models\CategoryClass;
 use App\Module\CourseCatalogue\Models\Subject;
 use Illuminate\Http\Request;
 
-class CategoryController extends BaseAction
+class SubjectController extends BaseAction
 {
     /**
      * Display a listing of the resource.
@@ -38,6 +38,7 @@ class CategoryController extends BaseAction
     public function create()
     {
         $this->data['categories'] = Category::select('id', 'name', 'code')->orderBy('name', 'ASC')->get();
+        $this->data['classData'] = json_encode(CategoryClass::classByCategory(false, true));
 
         return $this->setView('module.course-catalogue.subject.create')->action();
     }
@@ -91,14 +92,11 @@ class CategoryController extends BaseAction
         $this->data['subject'] = $subject;
         $this->data['categories'] = Category::select('id', 'name', 'code')->orderBy('name', 'ASC')->get();
 
-        $categoryClass = CategoryClass::where('id', $subject->category_class_id)->first();
+        $this->data['class'] = CategoryClass::where('id', $subject->category_class_id)->first();
 
-        $this->data['classes'] = CategoryClass::select('id', 'name', 'code')
-            ->where('category_id', $categoryClass->category_id)
-            ->orderBy('name', 'ASC')
-            ->get();
+        $this->data['classData'] = json_encode(CategoryClass::classByCategory(false, true));
 
-        return $this->setView('module.course-catalogue.class.edit')->action();
+        return $this->setView('module.course-catalogue.subject.edit')->action();
     }
 
     /**
@@ -116,9 +114,15 @@ class CategoryController extends BaseAction
 
         $this->validate($request, [
             'name' => 'required|min:3|max:150',
-            'code' => 'required|unique:subjects,code',
+            'code' => 'required',
             'class_id' => 'required|exists:category_classes,id'
         ]);
+
+        $code = trim(strtoupper($request->code));
+
+        if($code !== trim(strtoupper($subject->code)) && Subject::where('code', $code)->exists()) {
+            return back()->with('status', 'Subject code already exists');
+        }
 
         $subject->name = $request->name;
         $subject->code = $request->code;

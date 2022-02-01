@@ -4,10 +4,10 @@ namespace App\Traits;
 
 trait AppResponse
 {
+    public $data = [];
     private $httpCode = 200;
     private $view = '';
     private $headers = [];
-    private $data = [];
     private $jsonResponse = [
         'success' => false,
         'message' => "",

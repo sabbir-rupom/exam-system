@@ -7,7 +7,7 @@ use App\Module\CourseCatalogue\Models\Category;
 use App\Module\CourseCatalogue\Models\CategoryClass;
 use Illuminate\Http\Request;
 
-class CategoryController extends BaseAction
+class CategoryClassController extends BaseAction
 {
     /**
      * Display a listing of the resource.
@@ -16,13 +16,7 @@ class CategoryController extends BaseAction
      */
     public function index()
     {
-        $select = [
-            'category_classes.id', 'category_classes.name as class_name', 'category_classes.code as class_code',
-            'categories.name as category_name', 'categories.code as category_code',
-        ];
-        $this->data['classes'] = CategoryClass::select($select)
-            ->join('categories', 'categories.id', '=', 'category_classes.category_id')
-            ->paginate(10);
+        $this->data['classes'] = CategoryClass::classByCategory(true);
 
         return $this->setView('module.course-catalogue.class.index')->action();
     }
@@ -56,7 +50,7 @@ class CategoryController extends BaseAction
         CategoryClass::create([
             'name' => $request->name,
             'category_id' => $request->category_id,
-            'code' => $request->code,
+            'code' => trim(strtoupper($request->code)),
         ]);
 
         return redirect()->route('entity.category-class.index')->with('success', 'Class added successfully');
@@ -105,12 +99,18 @@ class CategoryController extends BaseAction
 
         $this->validate($request, [
             'name' => 'required|min:3|max:150',
-            'code' => 'required|unique:category_classes,code',
+            'code' => 'required',
             'category_id' => 'required|exists:categories,id'
         ]);
 
+        $code = trim(strtoupper($request->code));
+
+        if($code !== trim(strtoupper($categoryClass->code)) && CategoryClass::where('code', $code)->exists()) {
+            return back()->with('status', 'Class code already exists');
+        }
+
         $categoryClass->name = $request->name;
-        $categoryClass->code = $request->code;
+        $categoryClass->code = $code;
         $categoryClass->category_id = $request->category_id;
         $categoryClass->save();
 

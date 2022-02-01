@@ -4,6 +4,13 @@ $(function ()
     'use strict';
 
     /**
+     * Normalize statements
+     */
+     $.fn.hasAttr = function(name) {
+        return this.attr(name) !== undefined;
+     };
+
+    /**
      * Sweet confirm then delete an item with ajax call
      */
     $('.delete-confirm').on('click', function (e)
@@ -70,6 +77,17 @@ $(function ()
     if ($("select.select2").length > 0) {
         $(".select2").select2({
             placeholder: "Please Select"
+        });
+    }
+
+    if ($('.select-source').length > 0) {
+        $('.select-source').each(function ()
+        {
+            processSelectOptions(this);
+        });
+
+        $(document).on('change', '.select-source', function() {
+            processSelectOptions(this);
         });
     }
 

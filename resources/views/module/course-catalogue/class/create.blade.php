@@ -5,9 +5,10 @@
 @section('content')
 
     @component('components.breadcrumb')
-        @slot('breadTitle') Home @endslot
-        @slot('breadSubTitle') Category @endslot
-        @slot('breadSubLink') {{ route('entity.category.index') }} @endslot
+        @slot('breadTitle') Category @endslot
+        @slot('breadLink') {{ route('entity.category.index') }} @endslot
+        @slot('breadSubTitle') Class @endslot
+        @slot('breadSubLink') {{ route('entity.category-class.index') }} @endslot
         @slot('pageTitle') Add @endslot
     @endcomponent
 
@@ -19,11 +20,30 @@
 
             <div class="row">
                 <div class="col-md-8 offset-md-2">
-                    <form action="{{ route('entity.category.store') }}" method="POST" enctype="multipart/form-data">
+                    <form action="{{ route('entity.category-class.store') }}" method="POST" enctype="multipart/form-data">
                         @csrf
                         <div class="mb-3 row">
+                            <label for="select--category" class="col-md-3 col-form-label text-end">
+                                Select Category<sup class="text-danger">*</sup>
+                            </label>
+                            <div class="col-md-8">
+                                <select class="form-select" id="select--category" name="category_id" aria-label="Select category">
+                                    @foreach ($categories as $k => $item)
+                                        <option {{ $k === 0 ? 'selected' : '' }} value="{{ $item->id }}">
+                                            {{ $item->name }} ({{ $item->code }}) ]</option>
+                                    @endforeach
+                                </select>
+
+                                @error('category_id')
+                                    <div class="invalid-feedback d-block">
+                                        {{ $message }}
+                                    </div>
+                                @enderror
+                            </div>
+                        </div>
+                        <div class="mb-3 row">
                             <label for="input--name" class="col-md-3 col-form-label text-end">
-                                Category Name <sup class="text-danger">*</sup>
+                                Class Name <sup class="text-danger">*</sup>
                             </label>
                             <div class="col-md-8">
                                 <input type="text" required class="form-control" name="name"
@@ -51,16 +71,6 @@
                                 @enderror
                             </div>
                         </div>
-                        <div class="mb-3 row">
-                            <label for="input--detail" class="col-md-3 col-form-label text-end">
-                                Description
-                            </label>
-                            <div class="col-md-8">
-                                <textarea required class="form-control" name="detail"placeholder="Enter detail text" id="input--detail">{{
-                                    old('detail', '')
-                                }}</textarea>
-                            </div>
-                        </div>
 
                         <div class="d-flex justify-content-center">
                             <button type="submit" class="btn btn-success btn-lg mt-3">Create</button>
@@ -72,3 +82,11 @@
     </div>
 
 @endsection
+
+{{-- @section('css')
+<link href="{{ URL::asset('/assets/libs/select2/select2.min.css') }}" rel="stylesheet" type="text/css" />
+@endsection
+
+@section('script')
+<script src="{{ URL::asset('/assets/libs/select2/select2.min.js') }}"></script>
+@endsection --}}

@@ -44,9 +44,9 @@ class CategoryController extends BaseAction
         ]);
 
         Category::create([
-            'name' => $request->name,
+            'name' => trim($request->name),
             'detail' => isset($request->detail) ? $request->detail : null,
-            'code' => $request->code,
+            'code' => trim(strtoupper($request->code)),
         ]);
 
         return redirect()->route('entity.category.index')->with('success', 'Category added successfully');
@@ -93,11 +93,17 @@ class CategoryController extends BaseAction
 
         $this->validate($request, [
             'name' => 'required|min:3|max:150',
-            'code' => 'required|unique:categories,code',
+            'code' => 'required',
         ]);
 
-        $category->name = $request->name;
-        $category->code = $request->code;
+        $code = trim(strtoupper($request->code));
+
+        if($code !== $category->code && Category::where('code', $code)->exists()) {
+            return back()->with('status', 'Category code already exists');
+        }
+
+        $category->name = trim($request->name);
+        $category->code = $code;
         $category->detail = $request->detail;
         $category->save();
 

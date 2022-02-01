@@ -12,12 +12,10 @@
 
 <!-- App js -->
 <script src="{{ URL::asset('assets/js/theme.min.js') . '?x=' . filemtime(public_path('assets/js/theme.min.js'))}}"></script>
+<script src="{{ URL::asset('assets/js/app.min.js') . '?x=' . filemtime(public_path('assets/js/app.min.js'))}}"></script>
 
 @admin
 <script src="{{ URL::asset('assets/js/admin.min.js') . '?x=' . filemtime(public_path('assets/js/admin.min.js'))}}"></script>
-
-@else
-<script src="{{ URL::asset('assets/js/app.min.js') . '?x=' . filemtime(public_path('assets/js/app.min.js'))}}"></script>
 @endadmin
 
 @user

@@ -369,3 +369,56 @@ function formDataToArray(formData)
 
     return array;
 }
+
+/**
+ * Process generating new options for targeted Select element
+ *
+ * @param {object} obj Dom element object
+ * @returns
+ */
+function processSelectOptions(obj)
+{
+    let targetSource = $(obj).data('target');
+
+    if ($(targetSource).length <= 0) {
+        return;
+    }
+
+    let value = $(targetSource).val(), dataSource = JSON.parse($($(obj).data('source')).val()), selected = null;
+
+    if($(obj).hasAttr('data-selected')) {
+        selected = $(obj).data("selected");
+    }
+
+    if (dataSource && dataSource[value]) {
+        refreshSelect($(obj), dataSource[value], selected);
+    } else {
+        console.log('source data not found')
+    }
+
+    return true;
+}
+
+/**
+ * Empty target select element and populate with new options
+ *
+ * @param {obj} dom
+ * @param {array} data
+ * @returns
+ */
+function refreshSelect(dom, data, selected = null)
+{
+    dom.html('');
+
+    var option;
+    for (let i in data) {
+        option = new Option(
+            data[i]['value'],
+            data[i]['id'],
+            (selected && selected == data[i]['id'] ? true : false),
+            false
+        );
+        dom.append(option);
+    }
+    return;
+}

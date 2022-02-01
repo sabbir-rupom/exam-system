@@ -5,9 +5,10 @@
 @section('content')
 
     @component('components.breadcrumb')
-        @slot('breadTitle') Home @endslot
-        @slot('breadSubTitle') Category @endslot
-        @slot('breadSubLink') {{ route('entity.category.index') }} @endslot
+        @slot('breadTitle') Category @endslot
+        @slot('breadLink') {{ route('entity.category.index') }} @endslot
+        @slot('breadSubTitle') Class @endslot
+        @slot('breadSubLink') {{ route('entity.category-class.index') }} @endslot
         @slot('pageTitle') Edit @endslot
     @endcomponent
 
@@ -17,15 +18,34 @@
 
             <h4 class="card-title mb-4 text-center">Edit Form</h4>
 
-            <form action="{{ route('entity.category.update', $category) }}" method="post">
+            <form action="{{ route('entity.category-class.update', $class) }}" method="post">
                 @csrf
                 @method('put')
                 <div class="mb-3 row">
-                    <label for="input--name" class="col-md-3 col-form-label text-end">
-                        Category Name <sup class="text-danger">*</sup>
+                    <label for="select--category" class="col-md-3 col-form-label text-end">
+                        Select Category<sup class="text-danger">*</sup>
                     </label>
                     <div class="col-md-8">
-                        <input type="text" required class="form-control" name="name" value="{{ $category->name }}"
+                        <select class="form-select" id="select--category" name="category_id" aria-label="Select category">
+                            @foreach ($categories as $item)
+                                <option {{ $item->id === $class->category_id ? 'selected' : '' }} value="{{ $item->id }}">
+                                    {{ $item->name }} ({{ $item->code }}) ]</option>
+                            @endforeach
+                        </select>
+
+                        @error('category_id')
+                            <div class="invalid-feedback d-block">
+                                {{ $message }}
+                            </div>
+                        @enderror
+                    </div>
+                </div>
+                <div class="mb-3 row">
+                    <label for="input--name" class="col-md-3 col-form-label text-end">
+                        Class Name <sup class="text-danger">*</sup>
+                    </label>
+                    <div class="col-md-8">
+                        <input type="text" required class="form-control" name="name" value="{{ $class->name }}"
                             placeholder="Enter text here" id="input--name">
 
                         @error('name')
@@ -40,7 +60,7 @@
                         Code <sup class="text-danger">*</sup>
                     </label>
                     <div class="col-md-8">
-                        <input type="text" required class="form-control" name="code" value="{{ $category->code }}"
+                        <input type="text" required class="form-control" name="code" value="{{ $class->code }}"
                             placeholder="Enter unique code" id="input--code">
 
                         @error('code')
@@ -48,16 +68,6 @@
                                 {{ $message }}
                             </div>
                         @enderror
-                    </div>
-                </div>
-                <div class="mb-3 row">
-                    <label for="input--detail" class="col-md-3 col-form-label text-end">
-                        Description
-                    </label>
-                    <div class="col-md-8">
-                        <textarea required class="form-control" name="detail"placeholder="Enter detail text" id="input--detail">{{
-                            $category->detail
-                        }}</textarea>
                     </div>
                 </div>
 
