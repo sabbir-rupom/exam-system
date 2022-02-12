@@ -1,27 +1,22 @@
-@extends('layouts.master-without-nav')
-@section('title') Welcome @endsection
+<!DOCTYPE html>
+<html lang="en">
 
-@section('body')
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Laravel React</title>
 
-    <body class="">
+    <link href="{{ URL::asset('/assets/react/css/front.min.css') }}" rel="stylesheet" type="text/css" />
 
-    @endsection
+    <script src="{{ URL::asset('assets/react/js/front.min.js') }}"></script>
+</head>
 
-    @section('content')
+<body>
+    <a title="Login now" href="{{ url('/login') }}" class="btn btn-info btn-lg">
+        Login Now
+    </a>
+    <div id="root"></div>
+</body>
 
-        <div class="min-vh-100 d-flex justify-content-center">
-            <div class="my-auto text-center">
-                <h1>
-                    <span class="has-text-align-center has-lr-font-size d-block mb-3">Exam Management System</span>
-                </h1>
-                <div class="d-flex justify-content-center my-4">
-                    <a title="Login now"
-                        href="{{ url('/login') }}"
-                        class="btn btn-info btn-lg">
-                        Login Now
-                    </a>
-                </div>
-            </div>
-        </div>
-
-    @endsection
+</html>

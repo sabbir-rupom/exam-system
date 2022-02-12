@@ -6,9 +6,10 @@ $(function ()
     /**
      * Normalize statements
      */
-     $.fn.hasAttr = function(name) {
+    $.fn.hasAttr = function (name)
+    {
         return this.attr(name) !== undefined;
-     };
+    };
 
     /**
      * Sweet confirm then delete an item with ajax call
@@ -71,23 +72,55 @@ $(function ()
         });
     });
 
-    /**
-     * Initialize select2 feature in select input fields
-     */
     if ($("select.select2").length > 0) {
-        $(".select2").select2({
+        /**
+         * Initialize select2 feature in select input fields
+         */
+        $("select.select2").select2({
             placeholder: "Please Select"
         });
     }
 
-    if ($('.select-source').length > 0) {
-        $('.select-source').each(function ()
+    if ($('select.select-source').length > 0) {
+        /**
+         * Initialize new options in select
+         */
+        $('select.select-source').each(function ()
         {
             processSelectOptions(this);
         });
 
-        $(document).on('change', '.select-source', function() {
+        $(document).on('change', '.select-source', function ()
+        {
             processSelectOptions(this);
+        });
+    }
+
+    if ($('.show-hidden').length > 0) {
+        $(document).on('click', '.show-hidden', function ()
+        {
+            let target = $(this).data('target'),
+            action = 'on', checked = true;
+            if ($(this).is(":radio") || $(this).is(":checkbox")) {
+                checked = $(this).is(":checked");
+            }
+
+            if($(this).hasAttr('data-action')) {
+                action = $(this).data('action');
+                checked = (action === 'off' ? false : true);
+            }
+
+            if($(target).length <= 0) {
+                return false;
+            }
+
+            if(checked) {
+                // bootstrap collapse class must be present
+                $(target).addClass('show');
+            } else {
+                $(target).removeClass('show');
+            }
+
         });
     }
 

@@ -8,6 +8,7 @@ use App\Http\Controllers\Ajax\EntityController as AjaxEntity;
 use App\Module\CourseCatalogue\Controllers\CategoryClassController;
 use App\Module\CourseCatalogue\Controllers\CategoryController;
 use App\Module\CourseCatalogue\Controllers\SubjectController;
+use App\Module\TestPaper\Controllers\ExamController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -39,6 +40,15 @@ Route::middleware(['auth'])->group(function () {
             Route::resource('category', CategoryController::class);
             Route::resource('category-class', CategoryClassController::class);
             Route::resource('subject', SubjectController::class);
+        });
+    });
+
+    Route::group(['middleware' => 'role.user:examiner'], function () {
+        /**
+         * Include admin related route definitions
+         */
+        Route::group(['prefix' => 'entity', 'as'=>'entity.'], function(){
+            Route::resource('exam', ExamController::class);
         });
     });
 

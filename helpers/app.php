@@ -3,6 +3,7 @@
 use App\Library\Resource\FileStorage;
 use App\Models\Question\Question;
 use App\Models\User;
+use App\Module\TestPaper\Models\Exam;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Exceptions\HttpResponseException;
@@ -368,6 +369,45 @@ if (!function_exists('question_type_match')) {
     }
 }
 
+if (!function_exists('exam_type')) {
+    /**
+     * Get type / types of exam
+     *
+     * @param string $key
+     * @return boolean
+     */
+    function exam_type(string $key)
+    {
+        return Exam::getTypes($key);
+    }
+}
+
+if (!function_exists('year_options')) {
+    /**
+     * Get years in descending
+     *
+     * @param boolean $option
+     * @param int $year
+     * @return array|string
+     */
+    function year_options(bool $option = false, int $val = null)
+    {
+        $year = intval(date('Y'));
+        $selected = '';
+        $result = $option ? [] : '';
+
+        for ($i=$year; $i > 1980; $i--) {
+            if($option) {
+                $selected = ($val && $val === $i) ? 'selected' : '';
+                $result .= "<option value='$i' $selected>$i</option>";
+            } else {
+                $result[] = $i;
+            }
+        }
+        return $result;
+    }
+}
+
 if (!function_exists('exam_status')) {
     /**
      * Check exam result status and return html string
@@ -387,42 +427,38 @@ if (!function_exists('exam_status')) {
     // }
 }
 
-// if (!function_exists('badge_status')) {
-//     /**
-//      * Check exam result status and return html string
-//      *
-//      * @param integer|string $status
-//      * @return string
-//      */
-//     function badge_status($status): string
-//     {
-//         if (is_numeric($status)) {
-//             $status = intval($status);
-//         }
+if (!function_exists('badge_status')) {
+    /**
+     * Check exam result status and return html string
+     *
+     * @param integer|string $status
+     * @return string
+     */
+    function badge_status($status): string
+    {
+        if (is_numeric($status)) {
+            $status = intval($status);
+        }
 
-//         if ($status === Quiz::RESULT_PASS) {
-//             return '<span class="badge-status bg-success">Passed</span>';
-//         } elseif ($status === Quiz::RESULT_FAIL || $status === 'fail') {
-//             return '<span class="badge-status bg-danger">Failed</span>';
-//         } elseif ($status === 'expire') {
-//             return '<span class="badge-status bg-danger">Expired</span>';
-//         } elseif ($status === 'complete') {
-//             return '<span class="badge-status bg-success">Completed</span>';
-//         } elseif ($status === 'in-progress') {
-//             return '<span class="badge-status bg-theme-orange">In Progress</span>';
-//         } elseif ($status === 'no-assign') {
-//             return '<span class="badge-status bg-danger">Not Assigned</span>';
-//         } elseif ($status === 'no-enroll') {
-//             return '<span class="badge-status bg-warning">Not Enrolled</span>';
-//         } elseif ($status === 'active') {
-//             return '<span class="badge-status bg-success">Active</span>';
-//         } elseif ($status === 'in-active') {
-//             return '<span class="badge-status bg-danger">In Active</span>';
-//         } else {
-//             return '<span class="badge-status bg-warning">Pending</span>';
-//         }
-//     }
-// }
+        if ($status === 'expire') {
+            return '<span class="badge-status bg-danger">Expired</span>';
+        } elseif ($status === 'complete') {
+            return '<span class="badge-status bg-success">Completed</span>';
+        } elseif ($status === 'in-progress') {
+            return '<span class="badge-status bg-theme-orange">In Progress</span>';
+        } elseif ($status === 'no-assign') {
+            return '<span class="badge-status bg-danger">Not Assigned</span>';
+        } elseif ($status === 'no-enroll') {
+            return '<span class="badge-status bg-warning">Not Enrolled</span>';
+        } elseif ($status === 'active') {
+            return '<span class="badge-status bg-success">Active</span>';
+        } elseif ($status === 'in-active') {
+            return '<span class="badge-status bg-danger">In Active</span>';
+        } else {
+            return '<span class="badge-status bg-warning">Pending</span>';
+        }
+    }
+}
 
 if (!function_exists('render_quiz_option')) {
     /**

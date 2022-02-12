@@ -51,6 +51,10 @@ hr {
     background-color: #ccc;
 }
 
+.mt-radio {
+    margin-top: 2.3rem;
+}
+
 #preloader {
     opacity: 0.9;
 }
@@ -219,3 +223,16 @@ fieldset.scheduler-border {
         }
     }
 }
+
+// .nav.nav-tabs {
+//     .nav-link {
+//         background: 0 0;
+//         background-color: rgba(0, 0, 0, 0);
+//         border: 0;
+//         border-radius: .25rem;
+//     }
+//     .nav-link.active, .show > .nav-link {
+//         color: #fff;
+//         background-color: #0d6efd;
+//     }
+// }

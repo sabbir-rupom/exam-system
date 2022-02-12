@@ -35,6 +35,18 @@
                         </a></li>
                     </ul>
                 </li>
+                <li>
+                    <a href="javascript: void(0);" class="has-arrow waves-effect">
+                        <i class="mdi mdi-garage-variant"></i>
+                        <span key="t-question-bank">Question Bank</span>
+                    </a>
+                    <ul class="sub-menu" aria-expanded="false">
+                        <li><a href="{{ route('entity.exam.index') }}" key="t-entity-exam-papers">
+                            <i class="bx bx-chevron-right"></i>
+                            Exam Papers
+                        </a></li>
+                    </ul>
+                </li>
                 {{-- <li>
                     <a href="javascript: void(0);" class="has-arrow waves-effect">
                         <i class="mdi mdi-cog"></i>

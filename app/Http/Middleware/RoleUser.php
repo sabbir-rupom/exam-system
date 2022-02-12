@@ -17,9 +17,16 @@ class RoleUser
     public function handle(Request $request, Closure $next, string $role)
     {
         $user = auth()->user();
+
+        $roles = [
+            'admin' => 'admin',
+            'examiner' => 'admin|teacher',
+            'teacher' => 'teacher'
+        ];
+
         if(empty($user->email_verified_at)) {
             return redirect()->route('login')->with('status', 'Please verify your account');
-        } elseif(has_role($user, $role)) {
+        } elseif(isset($roles[$role]) && has_role($user, $roles[$role])) {
             return $next($request);
         } else {
             // session()->flush();
